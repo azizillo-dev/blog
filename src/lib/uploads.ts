@@ -39,12 +39,16 @@ function getR2(): R2Config | null {
 export async function putObject(key: string, body: Uint8Array<ArrayBuffer>, contentType: string): Promise<string> {
   const remote = getR2();
   if (remote) {
-    const res = await remote.client.fetch(`${remote.endpoint}/${key}`, {
-      method: "PUT",
-      body,
-      headers: { "Content-Type": contentType, "Cache-Control": "public, max-age=31536000, immutable" },
-    });
-    if (!res.ok) throw new Error(`R2 upload failed: HTTP ${res.status} ${await res.text()}`);
+    const put = () =>
+      remote.client.fetch(`${remote.endpoint}/${key}`, {
+        method: "PUT",
+        body,
+        headers: { "Content-Type": contentType, "Cache-Control": "public, max-age=31536000, immutable" },
+      });
+    // Vaqtinchalik tarmoq/5xx xatosida bir marta qayta urinamiz.
+    let res = await put().catch(() => null);
+    if (!res || res.status >= 500) res = await put();
+    if (!res.ok) throw new Error(`R2 upload failed: HTTP ${res.status} ${(await res.text()).slice(0, 150)}`);
     return `${remote.publicUrl}/${key}`;
   }
   if (process.env.VERCEL) throw new Error("R2 is not configured (Vercel diski doimiy emas)");

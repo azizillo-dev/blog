@@ -14,6 +14,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: await saveImage(file) });
   } catch (error) {
     console.error("[upload]", error);
-    return NextResponse.json({ error: "Rasmni qayta ishlab bo'lmadi" }, { status: 422 });
+    // Endpoint faqat admin uchun — sababni ko'rsatish diagnostikani osonlashtiradi.
+    const reason = error instanceof Error ? error.message.slice(0, 200) : "unknown";
+    return NextResponse.json({ error: `Rasmni qayta ishlab bo'lmadi: ${reason}` }, { status: 422 });
   }
 }
