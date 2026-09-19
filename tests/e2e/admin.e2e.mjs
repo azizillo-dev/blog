@@ -42,10 +42,13 @@ try {
   const upload = await page.request.post(`${BASE}/api/upload`, {
     multipart: { file: { name: "t.png", mimeType: "image/png", buffer: png } },
   });
-  const { url } = await upload.json();
-  assert.match(url, /^\/uploads\/\d{4}\/\d{2}\/[a-f0-9]+\.webp$/);
-  const img = await page.request.get(`${BASE}${url}`);
-  assert.equal(img.headers()["content-type"], "image/webp");
+  const body = await upload.text();
+  assert.ok(upload.ok(), `upload HTTP ${upload.status()}: ${body.slice(0, 300)}`);
+  const { url } = JSON.parse(body);
+  // Lokal disk: /uploads/2026/09/x.webp · R2: https://<public>/2026/09/x.webp
+  assert.match(url, /^(\/uploads|https:\/\/[^/]+)\/\d{4}\/\d{2}\/[a-f0-9]+\.webp$/);
+  const img = await page.request.get(url.startsWith("/") ? `${BASE}${url}` : url);
+  assert.equal(img.headers()["content-type"], "image/webp", `rasm ochilmadi: HTTP ${img.status()} ${url}`);
   step(`rasm yuklandi → ${url}`);
 
   // 5. Post yaratish (blok-editor bilan)

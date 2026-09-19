@@ -17,7 +17,8 @@
 | 10 | Yakuniy: responsive/perf tekshiruv, build, smoke test, README | [x] | build ✔, eslint ✔, prod: smoke 15/15, E2E ✔, screens: overflow yo'q | ommaviy sahifalar ISR, ~110 kB JS |
 | 11 | Loyihalar bo'limi + "Men haqimda" Blog tepasiga, til More ichida | [x] | vitest 17/17, smoke 20/20, admin+private E2E ✔, screens ✔ | E2E: server `MAIL_OUTBOX=1` bilan (haqiqiy xat ketmasin) |
 | 12 | Bosh sahifa 4 post (katta kartalar: mobil karusel, desktop 2×2 — foydalanuvchi ixcham 2×2 mobilni rad etdi) + /posts pagination; "Blog" = men haqimda + tajriba/ta'lim/ko'nikmalar (admin) | [x] | vitest 22/22, smoke 24/24, admin+private E2E (prod) ✔, `layout.e2e.mjs` 10/10 (dev), screens ✔ | layout E2E dev'da: DB'ga to'g'ridan yozilgan postlarni prod ISR darhol ko'rmaydi |
-| 13 | Deploy: SQLite → Neon Postgres, rasmlar → R2, Vercel, .uz domen (`DEPLOY.md`) | [ ] | kod ✔ (tsc, eslint, vitest 22/22); Neon/R2 kalitlari kutilmoqda | zaxira: `data/export.json`, `data/dev.db.backup` |
+| 13 | Deploy: SQLite → Neon Postgres, rasmlar → R2, Vercel (`DEPLOY.md`) | [x] | jonli: smoke ✔, admin E2E ✔ (R2 upload) — https://blog-nine-snowy.vercel.app | env Vercel CLI orqali (`vercel env add`, qiymat stdin'dan — PowerShell pipe emas: CRLF qo'shadi). zaxira: `data/` |
+| 14 | .uz domen ulash + admin email/parolni almashtirish | [ ] | | domen olinishi kutilmoqda |
 
 ## Log
 
