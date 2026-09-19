@@ -38,7 +38,9 @@ try {
   step("login");
 
   // 4. Rasm yuklash API
-  const png = await sharp({ create: { width: 64, height: 40, channels: 3, background: "#5b4cf0" } }).png().toBuffer();
+  // Haqiqiy fotoga o'xshash katta rasm (shovqin → siqilmaydi): kichik rasm Content-Length xatosini ushlamagan edi
+  const noise = Buffer.from(Array.from({ length: 1600 * 1000 * 3 }, () => (Math.random() * 256) | 0));
+  const png = await sharp(noise, { raw: { width: 1600, height: 1000, channels: 3 } }).jpeg({ quality: 90 }).toBuffer();
   const upload = await page.request.post(`${BASE}/api/upload`, {
     multipart: { file: { name: "t.png", mimeType: "image/png", buffer: png } },
   });

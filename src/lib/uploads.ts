@@ -39,12 +39,16 @@ function getR2(): R2Config | null {
 export async function putObject(key: string, body: Uint8Array<ArrayBuffer>, contentType: string): Promise<string> {
   const remote = getR2();
   if (remote) {
-    const put = () =>
-      remote.client.fetch(`${remote.endpoint}/${key}`, {
+    // aws4fetch faqat imzolaydi; tanani o'zimiz Uint8Array sifatida yuboramiz. Aks holda imzolangan
+    // Request tanasi stream'ga aylanib, Content-Length'siz (chunked) ketadi va R2 411 qaytaradi.
+    const put = async () => {
+      const signed = await remote.client.sign(`${remote.endpoint}/${key}`, {
         method: "PUT",
         body,
         headers: { "Content-Type": contentType, "Cache-Control": "public, max-age=31536000, immutable" },
       });
+      return fetch(signed.url, { method: "PUT", headers: signed.headers, body });
+    };
     // Vaqtinchalik tarmoq/5xx xatosida bir marta qayta urinamiz.
     let res = await put().catch(() => null);
     if (!res || res.status >= 500) res = await put();
