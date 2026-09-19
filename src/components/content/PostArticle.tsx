@@ -24,9 +24,10 @@ export function PostArticle({ post, locale, dict, backHref }: Props) {
       </Container>
 
       {post.coverImage && (
-        <Container size="default" className="animate-fade-up mt-8 [--i:2]">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-3xl border border-border shadow-card">
-            <Cover src={post.coverImage} alt={post.title} priority sizes="(min-width: 896px) 896px, 100vw" />
+        // Muqova matn ustuni bilan bir xil kenglikda
+        <Container size="prose" className="animate-fade-up mt-8 [--i:2]">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border shadow-card sm:rounded-3xl">
+            <Cover src={post.coverImage} alt={post.title} priority sizes="(min-width: 704px) 672px, 100vw" />
           </div>
         </Container>
       )}

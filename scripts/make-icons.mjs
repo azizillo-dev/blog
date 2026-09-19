@@ -1,7 +1,7 @@
 /**
  * assets/avatar-cutout.png (fonsiz portret) → dumaloq favicon:
  *   src/app/icon.png (512), src/app/apple-icon.png (180), src/app/favicon.ico (16/32/48)
- * Fon — saytning accent gradienti, shunda tab yorug'/qorong'i bo'lsa ham ko'rinadi.
+ * Fon — osmon rang gradient (qora soch/kostyum aniq ajraladi; tab yorug'/qorong'i bo'lsa ham ko'rinadi).
  *   node scripts/make-icons.mjs
  */
 import sharp from "sharp";
@@ -14,7 +14,7 @@ const CROP = { left: 100, top: 45, width: 260, height: 260 };
 const background = Buffer.from(`
 <svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}">
   <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#5b4cf0"/><stop offset="1" stop-color="#9d8cff"/>
+    <stop offset="0" stop-color="#bae6fd"/><stop offset="1" stop-color="#38bdf8"/>
   </linearGradient></defs>
   <circle cx="${SIZE / 2}" cy="${SIZE / 2}" r="${SIZE / 2}" fill="url(#g)"/>
 </svg>`);
