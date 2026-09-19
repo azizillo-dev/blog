@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Neon PostgreSQL: DATABASE_URL — pooled (ilova uchun), DIRECT_URL — to'g'ridan (db push / migratsiya uchun).
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Enum qiymatlari String sifatida saqlanadi (provayderlar orasida ko'chirish oson bo'lsin).
+// Ruxsat etilgan qiymatlar: src/lib/constants.ts
+
+model Section {
+  id           String               @id @default(cuid())
+  slug         String               @unique
+  kind         String               @default("CUSTOM") // BLOG | IT | PRIVATE | CUSTOM
+  inNav        String               @default("MORE") // MAIN | MORE | HIDDEN
+  order        Int                  @default(0)
+  translations SectionTranslation[]
+  posts        Post[]
+  createdAt    DateTime             @default(now())
+}
+
+model SectionTranslation {
+  id          String  @id @default(cuid())
+  sectionId   String
+  section     Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String
+  description String  @default("")
+
+  @@unique([sectionId, locale])
+}
+
+model Post {
+  id           String            @id @default(cuid())
+  slug         String            @unique
+  sectionId    String
+  section      Section           @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  coverImage   String            @default("")
+  published    Boolean           @default(false)
+  publishedAt  DateTime          @default(now())
+  translations PostTranslation[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([sectionId, published, publishedAt])
+}
+
+model PostTranslation {
+  id      String @id @default(cuid())
+  postId  String
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  locale  String
+  title   String
+  excerpt String @default("")
+  blocks  String @default("[]") // JSON: Block[]
+
+  @@unique([postId, locale])
+}
+
+model Page {
+  id           String            @id @default(cuid())
+  key          String            @unique
+  image        String            @default("")
+  translations PageTranslation[]
+  updatedAt    DateTime          @updatedAt
+}
+
+model PageTranslation {
+  id     String @id @default(cuid())
+  pageId String
+  page   Page   @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  locale String
+  title  String
+  blocks String @default("[]")
+
+  @@unique([pageId, locale])
+}
+
+model Certificate {
+  id           String                   @id @default(cuid())
+  image        String
+  issuer       String
+  issuedAt     DateTime
+  url          String                   @default("")
+  order        Int                      @default(0)
+  translations CertificateTranslation[]
+  createdAt    DateTime                 @default(now())
+}
+
+model CertificateTranslation {
+  id            String      @id @default(cuid())
+  certificateId String
+  certificate   Certificate @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+  locale        String
+  title         String
+  description   String      @default("")
+
+  @@unique([certificateId, locale])
+}
+
+model Project {
+  id           String               @id @default(cuid())
+  image        String               @default("")
+  technologies String               @default("") // vergul bilan: "Next.js, Go, PostgreSQL"
+  demoUrl      String               @default("")
+  sourceUrl    String               @default("")
+  order        Int                  @default(0)
+  visible      Boolean              @default(true)
+  translations ProjectTranslation[]
+  createdAt    DateTime             @default(now())
+}
+
+model ProjectTranslation {
+  id          String  @id @default(cuid())
+  projectId   String
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String
+  description String  @default("")
+
+  @@unique([projectId, locale])
+}
+
+// "Men haqimda" sahifasidagi LinkedIn uslubidagi yozuvlar: ta'lim va ish tajribasi.
+model ResumeEntry {
+  id           String                   @id @default(cuid())
+  kind         String // EDUCATION | EXPERIENCE
+  organization String // universitet yoki kompaniya
+  logo         String                   @default("")
+  location     String                   @default("")
+  url          String                   @default("")
+  startDate    DateTime
+  endDate      DateTime? // null → hozirgacha
+  order        Int                      @default(0)
+  translations ResumeEntryTranslation[]
+  createdAt    DateTime                 @default(now())
+}
+
+model ResumeEntryTranslation {
+  id          String      @id @default(cuid())
+  entryId     String
+  entry       ResumeEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  locale      String
+  title       String // lavozim yoki yo'nalish/daraja
+  description String      @default("")
+
+  @@unique([entryId, locale])
+}
+
+model SocialLink {
+  id       String  @id @default(cuid())
+  platform String // ikon kaliti: telegram | github | linkedin | youtube | instagram | x | email | leetcode | website ...
+  label    String
+  url      String
+  order    Int     @default(0)
+  visible  Boolean @default(true)
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model AccessRequest {
+  id            String   @id @default(cuid())
+  email         String
+  message       String
+  locale        String   @default("uz")
+  codeHash      String
+  codeExpiresAt DateTime
+  attempts      Int      @default(0)
+  status        String   @default("UNVERIFIED") // UNVERIFIED | PENDING | APPROVED | REJECTED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+model PrivateUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}

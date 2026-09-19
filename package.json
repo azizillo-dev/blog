@@ -1,0 +1,55 @@
+{
+  "name": "personal-blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:export": "tsx scripts/export-data.ts",
+    "db:import": "tsx --env-file=.env scripts/import-data.ts",
+    "images:to-r2": "tsx --env-file=.env scripts/upload-local-images.ts",
+    "hash": "tsx scripts/hash-password.ts",
+    "smoke": "node scripts/smoke.mjs",
+    "e2e": "node tests/e2e/admin.e2e.mjs && node tests/e2e/private.e2e.mjs && node tests/e2e/layout.e2e.mjs",
+    "screens": "node tests/e2e/screens.mjs"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "aws4fetch": "^1.0.20",
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.12",
+    "next": "15.5.25",
+    "nodemailer": "^10.0.10",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.4",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.25",
+    "playwright-core": "^1.63.0",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  }
+}
