@@ -18,7 +18,8 @@
     "hash": "tsx scripts/hash-password.ts",
     "smoke": "node scripts/smoke.mjs",
     "e2e": "node tests/e2e/admin.e2e.mjs && node tests/e2e/private.e2e.mjs && node tests/e2e/layout.e2e.mjs",
-    "screens": "node tests/e2e/screens.mjs"
+    "screens": "node tests/e2e/screens.mjs",
+    "icons": "node scripts/make-icons.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

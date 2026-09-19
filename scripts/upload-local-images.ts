@@ -13,15 +13,17 @@ if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) 
 const client = new AwsClient({ accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY, service: "s3", region: "auto" });
 const root = path.join(process.cwd(), "storage", "uploads");
 
-const files = (await readdir(root, { recursive: true, withFileTypes: true })).filter((f) => f.isFile() && f.name.endsWith(".webp"));
-for (const f of files) {
-  const full = path.join(f.parentPath, f.name);
-  const key = path.relative(root, full).split(path.sep).join("/");
-  const res = await client.fetch(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${R2_BUCKET}/${key}`, {
-    method: "PUT",
-    body: await readFile(full),
-    headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=31536000, immutable" },
-  });
-  console.log(`${res.ok ? "✔" : "✘"} ${key}${res.ok ? "" : ` HTTP ${res.status}`}`);
-}
-console.log(`${files.length} ta fayl`);
+(async () => {
+  const files = (await readdir(root, { recursive: true, withFileTypes: true })).filter((f) => f.isFile() && f.name.endsWith(".webp"));
+  for (const f of files) {
+    const full = path.join(f.parentPath, f.name);
+    const key = path.relative(root, full).split(path.sep).join("/");
+    const res = await client.fetch(`https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${R2_BUCKET}/${key}`, {
+      method: "PUT",
+      body: await readFile(full),
+      headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=31536000, immutable" },
+    });
+    console.log(`${res.ok ? "✔" : "✘"} ${key}${res.ok ? "" : ` HTTP ${res.status}`}`);
+  }
+  console.log(`${files.length} ta fayl`);
+})();

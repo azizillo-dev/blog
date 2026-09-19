@@ -2,11 +2,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Neon PostgreSQL: DATABASE_URL — pooled (ilova uchun), DIRECT_URL — to'g'ridan (db push / migratsiya uchun).
+// Neon PostgreSQL (Vercel integratsiyasi nomlari): DATABASE_URL — pooled (ilova uchun),
+// DATABASE_URL_UNPOOLED — to'g'ridan (db push / migratsiya uchun).
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 // Enum qiymatlari String sifatida saqlanadi (provayderlar orasida ko'chirish oson bo'lsin).

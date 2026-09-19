@@ -4,11 +4,13 @@ Hammasi bepul, faqat domen pullik (yiliga). Tartib muhim — yuqoridan pastga.
 
 ## 1. Neon — ma'lumotlar bazasi (PostgreSQL)
 
-1. https://neon.tech → **Sign up** (GitHub bilan kirish qulay).
-2. **Create project**: nomi `blog`, Postgres versiyasi — default, **Region: AWS Europe Central 1 (Frankfurt)**.
-3. **Dashboard → Connect** tugmasi:
-   - **Connection pooling = ON** holatdagi qatorni nusxalang → bu `DATABASE_URL`.
-   - **Connection pooling = OFF** holatdagi qatorni nusxalang → bu `DIRECT_URL`.
+Neon hisobi Vercel orqali ochilgan bo'lsa, yangi baza **faqat Vercel panelidan** yaratiladi:
+
+1. https://vercel.com/dashboard → yuqoridagi **Storage** tab → **Create Database** → **Neon** → Continue.
+2. **Region: Frankfurt (eu-central-1)**, plan: **Free**, nomi: `blog-db` → **Create**.
+3. Baza sahifasi → **.env.local** tab → **Show secret** → `DATABASE_URL` va `DATABASE_URL_UNPOOLED` ni
+   lokal `.env` ga nusxalang.
+4. Vercel loyihasi yaratilgach (4-qadam): baza → **Connect Project** → `blog` — o'zgaruvchilar avtomatik qo'shiladi.
 
 ## 2. Cloudflare R2 — rasmlar
 

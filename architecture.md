@@ -33,7 +33,7 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
 | Framework | **Next.js 15 (App Router) + React 19 + TypeScript** | SSR/ISR, server actions, `next/image` |
 | Stil | **Tailwind CSS v4** + CSS o'zgaruvchilar (theme tokenlar) | JS runtime yo'q, kichik CSS |
 | Animatsiya | **Faqat CSS** (`transform`/`opacity`) + `IntersectionObserver` | GPU-da, 120 Hz, 0 KB kutubxona |
-| DB | **Prisma + PostgreSQL (Neon)** — `DATABASE_URL` pooled, `DIRECT_URL` db push uchun | bepul, serverless |
+| DB | **Prisma + PostgreSQL (Neon)** — `DATABASE_URL` pooled, `DATABASE_URL_UNPOOLED` db push uchun (Vercel integratsiyasi nomlari) | bepul, serverless |
 | Rasm saqlash | **Cloudflare R2** (`aws4fetch`); R2 sozlanmagan bo'lsa lokal `storage/uploads` (faqat dev) | 10 GB bepul |
 | Hosting | **Vercel** Hobby, region `fra1` (`vercel.json`) — qadamlar: `DEPLOY.md` | bepul |
 | Auth | **jose** (HS256 JWT, httpOnly cookie) + **bcryptjs** | edge-mos, yengil |
@@ -168,7 +168,7 @@ Rate-limit: IP+email bo'yicha xotiradagi oddiy limiter (`lib/rate-limit.ts`).
 
 ```
 DATABASE_URL="postgresql://...-pooler.../neondb?sslmode=require"
-DIRECT_URL="postgresql://.../neondb?sslmode=require"
+DATABASE_URL_UNPOOLED="postgresql://.../neondb?sslmode=require"
 R2_ACCOUNT_ID= R2_ACCESS_KEY_ID= R2_SECRET_ACCESS_KEY= R2_BUCKET= R2_PUBLIC_URL=
 AUTH_SECRET="..."                # 32+ belgi
 ADMIN_EMAIL="you@example.com"
