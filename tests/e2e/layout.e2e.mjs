@@ -30,8 +30,13 @@ async function assertLayout(page, expectedCount, columns) {
     els.map((e) => e.getBoundingClientRect()).map((r) => ({ x: Math.round(r.x), y: Math.round(r.y) })),
   );
   assert.equal(boxes.length, expectedCount, `kartalar soni ${boxes.length}, kutilgan ${expectedCount}`);
-  if (columns === "row") assert.equal(new Set(boxes.map((b) => b.y)).size, 1, "karusel bitta qatorda emas");
-  else assert.equal(new Set(boxes.map((b) => b.x)).size, Math.min(columns, expectedCount), "ustunlar soni noto'g'ri");
+  if (columns === "carousel2") {
+    // Mobil bosh sahifa: faqat 2 tasi gorizontal karusel, qolganlari bitta ustunda vertikal
+    assert.equal(boxes[0].y, boxes[1].y, "birinchi 2 ta karta bitta qatorda emas");
+    const rest = boxes.slice(2);
+    assert.equal(new Set(rest.map((b) => b.x)).size, Math.min(1, rest.length), "qolganlari bitta ustunda emas");
+    assert.ok(rest.every((b) => b.y > boxes[0].y), "qolganlari karuseldan pastda emas");
+  } else assert.equal(new Set(boxes.map((b) => b.x)).size, Math.min(columns, expectedCount), "ustunlar soni noto'g'ri");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, "sahifada gorizontal scroll bor");
 }
 
@@ -53,7 +58,7 @@ try {
   const total = existing + extra;
 
   const devices = [
-    { name: "telefon", viewport: { width: 360, height: 800 }, home: "row", list: 1 },
+    { name: "telefon", viewport: { width: 360, height: 800 }, home: "carousel2", list: 1 },
     { name: "desktop", viewport: { width: 1440, height: 900 }, home: 2, list: 2 },
   ];
   for (const { name: device, viewport, home, list } of devices) {
@@ -64,7 +69,7 @@ try {
     await page.locator("header").getByRole("link", { name: /.+/ }).first().click();
     await page.waitForURL(`${BASE}/uz`);
     await assertLayout(page, 4, home);
-    step(`${device}: logo → bosh sahifa, 4 ta post (${home === "row" ? "karusel" : "2×2"})`);
+    step(`${device}: logo → bosh sahifa, 4 ta post (${home === "carousel2" ? "2 karusel + vertikal" : "2×2"})`);
 
     // Barchasini ko'rish → 1-sahifa 10 ta
     await page.getByRole("link", { name: /Barcha postlarni ko.rish/ }).click();
