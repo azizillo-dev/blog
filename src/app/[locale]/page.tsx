@@ -11,6 +11,8 @@ import { FeaturedPosts } from "@/components/content/FeaturedPosts";
 
 export const revalidate = 3600;
 
+const FEATURED = 2;
+
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = toLocale((await params).locale);
   const dict = getDictionary(locale);
@@ -22,7 +24,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <Container>
       <PageHeading title={dict.home.recent} subtitle={blog?.description || undefined} icon={<span aria-hidden>✦</span>} />
-      <FeaturedPosts posts={posts} locale={locale} dict={dict} />
+      {/* Faqat 2 tasi gorizontal karusel (mobil); qolganlari ostida vertikal ro'yxat */}
+      <FeaturedPosts posts={posts.slice(0, FEATURED)} locale={locale} dict={dict} />
+      {posts.length > FEATURED && (
+        <div className="mt-12">
+          <PostGrid posts={posts.slice(FEATURED)} locale={locale} dict={dict} />
+        </div>
+      )}
       {posts.length === 0 && <PostGrid posts={[]} locale={locale} dict={dict} />}
       {total > HOME_POSTS && (
         <div className="mt-12 text-center">

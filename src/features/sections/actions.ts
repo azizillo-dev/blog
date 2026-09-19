@@ -5,7 +5,8 @@ import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth/session";
 import { NAV_PLACEMENTS } from "@/lib/constants";
 import { slugify } from "@/lib/utils";
-import { readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
+import { bool, readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
+import { autoTranslate, translationNote } from "@/features/admin/translate";
 import { revalidateSite } from "@/features/admin/revalidate";
 
 const sectionSchema = z.object({
@@ -17,12 +18,15 @@ const sectionSchema = z.object({
 export async function saveSectionAction(id: string | null, _: ActionState, fd: FormData): Promise<ActionState> {
   await requireAdmin();
   try {
-    const translations = readLocalized(fd, ["title", "description"], "title");
-    if (translations.length === 0) return { error: "Kamida bitta tilda nom kiriting." };
+    const input = readLocalized(fd, ["title", "description"], "title");
+    if (input.length === 0) return { error: "Kamida bitta tilda nom kiriting." };
     const data = sectionSchema.parse({
-      slug: str(fd, "slug") || slugify(translations[0].title),
+      slug: str(fd, "slug") || slugify(input[0].title),
       inNav: str(fd, "inNav"),
       order: str(fd, "order") || 0,
+    });
+    const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "description"], {
+      overwrite: bool(fd, "retranslate"),
     });
 
     if (id) {
@@ -32,7 +36,7 @@ export async function saveSectionAction(id: string | null, _: ActionState, fd: F
       await db.section.create({ data: { ...data, kind: "CUSTOM", translations: { create: translations } } });
     }
     revalidateSite();
-    return { ok: true, message: id ? "Saqlandi ✔" : "Bo'lim qo'shildi ✔" };
+    return { ok: true, message: (id ? "Saqlandi ✔" : "Bo'lim qo'shildi ✔") + translationNote(translated, failed) };
   } catch (error) {
     return toActionError(error);
   }

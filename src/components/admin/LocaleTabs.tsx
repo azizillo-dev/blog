@@ -31,6 +31,15 @@ export function LocaleTabs({ children }: { children: (locale: Locale) => React.R
           </button>
         ))}
       </div>
+      <div className="mb-4 space-y-2 rounded-xl bg-accent-soft/60 p-3 text-sm">
+        <p className="text-muted">
+          Faqat <b className="text-fg">o&apos;zbekcha</b> yozing — bo&apos;sh qolgan RU/EN saqlashda avtomatik tarjima qilinadi.
+        </p>
+        <label className="flex cursor-pointer items-start gap-2">
+          <input type="checkbox" name="retranslate" className="mt-0.5 size-4 accent-[var(--accent)]" />
+          <span>O&apos;zbekchani o&apos;zgartirdim — RU va EN&apos;ni qayta tarjima qilish (ular ustidan yoziladi)</span>
+        </label>
+      </div>
       {LOCALES.map((l) => (
         <div key={l} role="tabpanel" hidden={active !== l} className="space-y-4">
           {children(l)}

@@ -22,7 +22,7 @@ export function Footer({ dict, links, author }: Props) {
                     aria-label={link.label}
                     title={link.label}
                     style={{ "--brand": BRAND_COLOR[link.platform] ?? "var(--accent)" } as React.CSSProperties}
-                    className="group grid size-16 place-items-center rounded-2xl border border-border bg-surface text-muted transition-[transform,color,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[var(--brand)] hover:text-[var(--brand)]"
+                    className="group grid size-16 place-items-center rounded-2xl border border-border bg-surface text-[var(--brand)] transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[var(--brand)] active:scale-95"
                   >
                     <SocialIcon platform={link.platform} size={24} />
                   </a>

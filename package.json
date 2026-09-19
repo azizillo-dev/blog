@@ -15,6 +15,7 @@
     "db:export": "tsx scripts/export-data.ts",
     "db:import": "tsx --env-file=.env scripts/import-data.ts",
     "images:to-r2": "tsx --env-file=.env scripts/upload-local-images.ts",
+    "translate:missing": "tsx --conditions=react-server --env-file=.env scripts/translate-missing.ts",
     "hash": "tsx scripts/hash-password.ts",
     "smoke": "node scripts/smoke.mjs",
     "e2e": "node tests/e2e/admin.e2e.mjs && node tests/e2e/private.e2e.mjs && node tests/e2e/layout.e2e.mjs",

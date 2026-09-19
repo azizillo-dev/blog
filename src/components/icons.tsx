@@ -123,11 +123,11 @@ export function SocialIcon({ platform, ...props }: IconProps & { platform: strin
 /** Brend rangi — footer plitkalarida hover uchun. */
 export const BRAND_COLOR: Record<string, string> = {
   telegram: "#229ED9",
-  github: "#8b949e",
+  github: "var(--fg)", // brend rangi qora/oq — theme'ga moslashadi
   linkedin: "#0A66C2",
   youtube: "#FF0033",
   instagram: "#E1306C",
-  x: "#8b949e",
+  x: "var(--fg)",
   facebook: "#1877F2",
   leetcode: "#FFA116",
   email: "#5b4cf0",

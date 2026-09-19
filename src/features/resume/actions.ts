@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/auth/session";
 import { RESUME_KINDS } from "@/lib/constants";
 import { bool, readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
 import { revalidateSite } from "@/features/admin/revalidate";
+import { autoTranslate, translationNote } from "@/features/admin/translate";
 
 const entrySchema = z
   .object({
@@ -23,8 +24,8 @@ const entrySchema = z
 export async function saveResumeEntryAction(id: string | null, _: ActionState, fd: FormData): Promise<ActionState> {
   await requireAdmin();
   try {
-    const translations = readLocalized(fd, ["title", "description"], "title");
-    if (translations.length === 0) return { error: "Kamida bitta tilda lavozim/yo'nalish kiriting." };
+    const input = readLocalized(fd, ["title", "description"], "title");
+    if (input.length === 0) return { error: "Kamida bitta tilda lavozim/yo'nalish kiriting." };
     const current = bool(fd, "current");
     const data = entrySchema.parse({
       kind: str(fd, "kind"),
@@ -37,6 +38,9 @@ export async function saveResumeEntryAction(id: string | null, _: ActionState, f
       endDate: current || !str(fd, "endDate") ? null : `${str(fd, "endDate")}-01`,
       order: str(fd, "order") || 0,
     });
+    const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "description"], {
+      overwrite: bool(fd, "retranslate"),
+    });
 
     if (id) {
       await db.resumeEntry.update({ where: { id }, data: { ...data, translations: { deleteMany: {}, create: translations } } });
@@ -44,7 +48,7 @@ export async function saveResumeEntryAction(id: string | null, _: ActionState, f
       await db.resumeEntry.create({ data: { ...data, translations: { create: translations } } });
     }
     revalidateSite();
-    return { ok: true, message: id ? "Saqlandi ✔" : "Qo'shildi ✔" };
+    return { ok: true, message: (id ? "Saqlandi ✔" : "Qo'shildi ✔") + translationNote(translated, failed) };
   } catch (error) {
     return toActionError(error);
   }
