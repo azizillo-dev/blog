@@ -2,7 +2,7 @@ import type { Dictionary } from "./en";
 
 const uz: Dictionary = {
   nav: {
-    blog: "Blog",
+    blog: "About", // menyudagi yozuv: bu sahifa muallif haqida
     more: "Ko'proq",
     certificates: "Sertifikatlar",
     about: "Men haqimda",

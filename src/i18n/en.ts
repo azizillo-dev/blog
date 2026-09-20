@@ -1,6 +1,6 @@
 const en = {
   nav: {
-    blog: "Blog",
+    blog: "About",
     more: "More",
     certificates: "Certificates",
     about: "About me",

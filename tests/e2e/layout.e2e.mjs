@@ -85,12 +85,12 @@ try {
     step(`${device}: pagination 2-sahifa`);
 
     // Blog → men haqimda
-    await page.locator("header").getByRole("link", { name: "Blog", exact: true }).click();
+    await page.locator("header").getByRole("link", { name: "About", exact: true }).click();
     await page.waitForURL(`${BASE}/uz/blog`);
     await page.getByRole("heading", { name: "Tajriba" }).waitFor();
     await page.getByRole("heading", { name: "Ta'lim" }).waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0);
-    step(`${device}: Blog → tajriba va ta'lim`);
+    step(`${device}: About → tajriba va ta'lim`);
     await page.close();
   }
 

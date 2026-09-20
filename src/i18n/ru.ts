@@ -2,7 +2,7 @@ import type { Dictionary } from "./en";
 
 const ru: Dictionary = {
   nav: {
-    blog: "Блог",
+    blog: "About",
     more: "Ещё",
     certificates: "Сертификаты",
     about: "Обо мне",
