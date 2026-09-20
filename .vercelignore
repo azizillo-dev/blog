@@ -1,0 +1,9 @@
+# Vercel'ga yuborilmaydigan fayllar (env qiymatlari Vercel panelida saqlanadi)
+.env
+.env.*
+data/
+storage/
+test-results/
+.mail-outbox/
+tests/
+photo.jpg

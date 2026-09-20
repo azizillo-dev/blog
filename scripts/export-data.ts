@@ -1,3 +1,4 @@
+
 /**
  * Butun DB'ni JSON'ga eksport qiladi (DB provayderini almashtirishdan oldin zaxira).
  *   npx tsx scripts/export-data.ts [fayl]   → default: data/export.json

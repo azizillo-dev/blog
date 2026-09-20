@@ -1,4 +1,4 @@
-# Shaxsiy blog
+# Shaxsiy blog — [azizillo.uz](https://azizillo.uz)
 
 Next.js 15 · Tailwind v4 · Prisma (SQLite) · UZ / RU / EN · dark / light.
 Arxitektura: [architecture.md](architecture.md) · Jarayon: [process.md](process.md)

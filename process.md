@@ -19,7 +19,7 @@
 | 12 | Bosh sahifa 4 post (katta kartalar: mobil karusel, desktop 2×2 — foydalanuvchi ixcham 2×2 mobilni rad etdi) + /posts pagination; "Blog" = men haqimda + tajriba/ta'lim/ko'nikmalar (admin) | [x] | vitest 22/22, smoke 24/24, admin+private E2E (prod) ✔, `layout.e2e.mjs` 10/10 (dev), screens ✔ | layout E2E dev'da: DB'ga to'g'ridan yozilgan postlarni prod ISR darhol ko'rmaydi |
 | 13 | Deploy: SQLite → Neon Postgres, rasmlar → R2, Vercel (`DEPLOY.md`) | [x] | jonli: smoke ✔, admin E2E ✔ (R2 upload) — https://blog-nine-snowy.vercel.app | env Vercel CLI orqali (`vercel env add`, qiymat stdin'dan — PowerShell pipe emas: CRLF qo'shadi). zaxira: `data/` |
 | 15 | Avto-tarjima (uz → ru/en, saqlashda; `npm run translate:missing`), bosh sahifa: 2 karusel + vertikal, footer brend ranglari | [x] | vitest 25/25, jonli: admin E2E ✔, mobil 2 karta bitta qatorda, footer ranglari ✔ | tarjima: bepul Google gtx endpoint (kalitsiz, norasmiy) — ishlamasa saqlash baribir o'tadi, til uz'ga fallback. `layout.e2e` prod DB'ga yozadi — faqat lokal DB bilan ishga tushiring |
-| 14 | .uz domen ulash + admin email/parolni almashtirish + portret favicon | [~] | admin ✔ (jonli login), favicon ✔ (`npm run icons`, manba `assets/avatar-cutout.png`) | `azizillo.uz` (ahost.uz) Vercel'ga qo'shildi; DNS: A @ 76.76.21.21, CNAME www cname.vercel-dns.com — kutilmoqda; keyin SITE_URL → https://azizillo.uz |
+| 14 | .uz domen + admin login + favicon | [x] | jonli: **https://azizillo.uz** (HTTPS ✔, http→https 308), smoke ✔, admin E2E ✔ | sertifikat o'zi berilmadi → `vercel certs issue azizillo.uz www.azizillo.uz`. Favicon: `src/app/icon.svg` (oq "A", qora fon) → `npm run icons` |
 
 ## Log
 
