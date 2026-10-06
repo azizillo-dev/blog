@@ -23,7 +23,8 @@ export default async function CertificatesPage({ params }: Params) {
     <Container size="wide">
       <PageHeading title={t.title} subtitle={t.subtitle} />
       {certificates.length === 0 && <p className="py-16 text-center text-muted">{t.empty}</p>}
-      <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* auto-rows-fr — barcha qatorlar bir xil balandlikda */}
+      <div className="grid auto-rows-fr items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {certificates.map((c, i) => (
           <CertificateCard key={c.id} certificate={c} locale={locale} t={t} common={dict.common} index={i} />
         ))}
