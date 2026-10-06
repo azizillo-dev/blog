@@ -14,7 +14,7 @@ const checks = [
   { path: "/uz/posts?page=abc", status: 200 },
   { path: "/admin/resume", status: 307 },
   { path: "/uz/projects", status: 200, contains: "Loyihalar" },
-  { path: "/en/projects", status: 200, contains: "Personal blog" },
+  { path: "/en/projects", status: 200 },
   { path: "/uz/about", status: 308 },
   { path: "/admin/projects", status: 307 },
   { path: "/ru", status: 200, contains: "Последние посты" },

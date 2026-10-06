@@ -21,6 +21,8 @@
 | 15 | Avto-tarjima (uz → ru/en, saqlashda; `npm run translate:missing`), bosh sahifa: 2 karusel + vertikal, footer brend ranglari | [x] | vitest 25/25, jonli: admin E2E ✔, mobil 2 karta bitta qatorda, footer ranglari ✔ | tarjima: bepul Google gtx endpoint (kalitsiz, norasmiy) — ishlamasa saqlash baribir o'tadi, til uz'ga fallback. `layout.e2e` prod DB'ga yozadi — faqat lokal DB bilan ishga tushiring |
 | 14 | .uz domen + admin login + favicon | [x] | jonli: **https://azizillo.uz** (HTTPS ✔, http→https 308), smoke ✔, admin E2E ✔ | sertifikat o'zi berilmadi → `vercel certs issue azizillo.uz www.azizillo.uz`. Favicon: `src/app/icon.svg` (oq "A", qora fon) → `npm run icons` |
 
+| 16 | 4 ta maqola (IT/AI/TATU/FAANG) + loyiha va sertifikatlarga batafsil sahifa, bir xil balandlikdagi kartalar | [x] | jonli: smoke ✔, kartalar balandligi teng (599/490 px), karta → `/projects/<slug>` → Orqaga ✔ | maqolalar faktlari ochiq manbalardan, har birida havola; `npm run slugs:backfill` eski yozuvlarga slug beradi |
+
 ## Log
 
 - 2026-09-19: C diskda joy tugadi (ENOSPC) → npm kesh tozalandi (~6 GB). Yana chiqsa: `%LOCALAPPDATA%\npm-cache\_cacache` ni o'chiring.

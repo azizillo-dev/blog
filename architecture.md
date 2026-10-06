@@ -16,7 +16,9 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
 - Admin paneldan yangi bo'limlar (section) qo'shish.
 - **More** menyusi:
   - **Sertifikatlar** — rasm, qayerdan olingani, sana, havola.
-  - **Loyihalar** (`/projects`) — rasm, tavsif, texnologiyalar (chip), demo va kod havolalari.
+  - **Loyihalar** (`/projects`) — bir xil balandlikdagi kartalar (sarlavha 2 qator, tavsif 3 qator, chiplar
+    `max=6` + "+N"); karta bosilsa `/projects/<slug>` batafsil sahifasi (Orqaga / Bosh sahifa havolalari bilan).
+    Sertifikatlar ham shunday: `/certificates/<slug>`. `slug` nomdan avtomatik (`features/admin/slug.ts`).
 - **Men haqimda** — "Blog" sahifasida; blok-editor: matn va rasmlarni istalgan tartib/joylashuvda qo'yish.
   Eski `/about` → `/blog` ga 308 redirect.
   - **Private** — qulflangan bo'lim (pastdagi oqimga qarang).
