@@ -98,6 +98,8 @@ const ru: Dictionary = {
     theme: "Сменить тему",
     language: "Язык",
     toTop: "Наверх",
+    expand: "Подробнее",
+    collapse: "Свернуть",
     notFound: "Страница не найдена",
     home: "Главная",
   },

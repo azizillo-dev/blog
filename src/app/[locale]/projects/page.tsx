@@ -17,16 +17,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ProjectsPage({ params }: Params) {
   const locale = toLocale((await params).locale);
-  const t = getDictionary(locale).projects;
+  const dict = getDictionary(locale);
+  const t = dict.projects;
   const projects = await listProjects(locale);
 
   return (
     <Container size="wide">
       <PageHeading title={t.title} subtitle={t.subtitle} />
       {projects.length === 0 && <p className="py-16 text-center text-muted">{t.empty}</p>}
-      <div className={cn("grid gap-6 sm:gap-8", projects.length === 1 ? "mx-auto max-w-2xl" : "sm:grid-cols-2")}>
+      <div className={cn("grid items-stretch gap-6 sm:gap-8", projects.length === 1 ? "mx-auto max-w-2xl" : "sm:grid-cols-2")}>
         {projects.map((p, i) => (
-          <ProjectCard key={p.id} project={p} t={t} index={i} />
+          <ProjectCard key={p.id} project={p} t={t} common={dict.common} index={i} />
         ))}
       </div>
     </Container>

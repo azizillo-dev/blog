@@ -96,6 +96,8 @@ const en = {
     theme: "Toggle theme",
     language: "Language",
     toTop: "Back to top",
+    expand: "Read more",
+    collapse: "Show less",
     notFound: "Page not found",
     home: "Home",
   },

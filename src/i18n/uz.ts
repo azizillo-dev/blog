@@ -98,6 +98,8 @@ const uz: Dictionary = {
     theme: "Mavzuni almashtirish",
     language: "Til",
     toTop: "Yuqoriga",
+    expand: "Batafsil",
+    collapse: "Yopish",
     notFound: "Sahifa topilmadi",
     home: "Bosh sahifa",
   },
