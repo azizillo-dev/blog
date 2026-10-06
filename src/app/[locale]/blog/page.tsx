@@ -28,7 +28,12 @@ export default async function AboutPage({ params }: Params) {
 
   return (
     <Container size="prose">
-      <AboutIntro title={page?.title ?? ""} image={page?.image ?? ""} blocks={page?.blocks ?? []} />
+      <AboutIntro
+        title={page?.title ?? ""}
+        image={page?.image ?? ""}
+        blocks={page?.blocks ?? []}
+        cv={{ url: page?.fileUrl ?? "", label: t.cv }}
+      />
       <ResumeSection title={t.experience} entries={entries.filter((e) => e.kind === "EXPERIENCE")} locale={locale} t={t} />
       <ResumeSection title={t.education} entries={entries.filter((e) => e.kind === "EDUCATION")} locale={locale} t={t} />
       {skills.length > 0 && (

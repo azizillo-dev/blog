@@ -15,6 +15,8 @@ export function isAllowedImage(type: string) {
   return ALLOWED.has(type);
 }
 
+export const isPdf = (type: string) => type === "application/pdf";
+
 /* ---------- Saqlash joyi: Cloudflare R2 (prod) yoki lokal disk (dev) ---------- */
 
 type R2Config = { client: AwsClient; endpoint: string; publicUrl: string };
@@ -75,6 +77,13 @@ export async function saveImage(file: File): Promise<string> {
     .toBuffer();
 
   return putObject(key, new Uint8Array(output), "image/webp");
+}
+
+/** PDF (masalan CV) — o'zgarishsiz saqlanadi, nomi tasodifiy. */
+export async function savePdf(file: File): Promise<string> {
+  const now = new Date();
+  const key = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, "0")}/${randomBytes(8).toString("hex")}.pdf`;
+  return putObject(key, new Uint8Array(await file.arrayBuffer()), "application/pdf");
 }
 
 /** URL yo'lidan diskdagi faylga; direktoriyadan tashqariga chiqishga yo'l qo'yilmaydi. */

@@ -8,5 +8,5 @@ export async function getPage(key: string, locale: Locale) {
   const page = await db.page.findUnique({ where: { key }, include: { translations: true } });
   if (!page) return null;
   const t = pickTranslation(page.translations, locale);
-  return { image: page.image, title: t?.title ?? "", blocks: parseBlocks(t?.blocks) };
+  return { image: page.image, fileUrl: page.fileUrl, title: t?.title ?? "", blocks: parseBlocks(t?.blocks) };
 }

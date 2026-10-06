@@ -53,6 +53,29 @@ try {
   assert.equal(img.headers()["content-type"], "image/webp", `rasm ochilmadi: HTTP ${img.status()} ${url}`);
   step(`rasm yuklandi → ${url}`);
 
+  // 4b. CV (PDF) yuklash — About sahifasidagi "CV yuklab olish" uchun
+  const pdf = Buffer.from(
+    "%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n" +
+      "3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 200 200]>>endobj\ntrailer<</Root 1 0 R>>\n%%EOF",
+  );
+  const pdfRes = await page.request.post(`${BASE}/api/upload`, {
+    multipart: { file: { name: "cv.pdf", mimeType: "application/pdf", buffer: pdf } },
+  });
+  const pdfBody = await pdfRes.text();
+  assert.ok(pdfRes.ok(), `pdf upload HTTP ${pdfRes.status()}: ${pdfBody.slice(0, 300)}`);
+  const { url: pdfUrl } = JSON.parse(pdfBody);
+  assert.match(pdfUrl, /\.pdf$/);
+  const fetched = await page.request.get(pdfUrl.startsWith("/") ? `${BASE}${pdfUrl}` : pdfUrl);
+  assert.equal(fetched.headers()["content-type"], "application/pdf", `PDF ochilmadi: HTTP ${fetched.status()}`);
+  step(`CV (PDF) yuklandi → ${pdfUrl}`);
+
+  // Boshqa turdagi fayl rad etilishi kerak
+  const bad = await page.request.post(`${BASE}/api/upload`, {
+    multipart: { file: { name: "x.txt", mimeType: "text/plain", buffer: Buffer.from("salom") } },
+  });
+  assert.equal(bad.status(), 415, "matn fayli rad etilmadi");
+  step("notogri fayl turi rad etildi (415)");
+
   // 5. Post yaratish (blok-editor bilan)
   const slug = `e2e-${Date.now()}`;
   await page.goto(`${BASE}/admin/posts/new`);

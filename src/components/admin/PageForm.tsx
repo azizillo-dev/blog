@@ -6,11 +6,13 @@ import type { Block } from "@/lib/content/blocks";
 import type { ActionState } from "@/features/admin/form";
 import { BlockEditor } from "./BlockEditor";
 import { ImageField } from "./ImageInput";
+import { FileField } from "./FileInput";
 import { LocaleTabs } from "./LocaleTabs";
 import { ActionForm, Card, Field, FormMessage, Input, SubmitButton } from "@/components/ui/form";
 
 export type PageFormValues = {
   image: string;
+  fileUrl: string;
   translations: Partial<Record<Locale, { title: string; blocks: Block[] }>>;
 };
 
@@ -23,6 +25,9 @@ export function PageForm({ action, values }: Props) {
       <Card>
         <Field group label="Asosiy rasm (avatar)">
           <ImageField name="image" defaultValue={values.image} />
+        </Field>
+        <Field group label="CV (PDF)" hint="Yuklangan bo'lsa, sayt sahifasida «CV yuklab olish» tugmasi chiqadi.">
+          <FileField name="fileUrl" defaultValue={values.fileUrl} label="CV yuklash" />
         </Field>
       </Card>
       <Card>

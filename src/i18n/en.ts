@@ -20,6 +20,7 @@ const en = {
     experience: "Experience",
     education: "Education",
     skills: "Skills",
+    cv: "Download CV",
     present: "Present",
     years: "{n} yr",
     months: "{n} mo",

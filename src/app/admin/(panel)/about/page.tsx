@@ -25,6 +25,7 @@ export default async function AdminAboutPage() {
         action={savePageAction.bind(null, KEY)}
         values={{
           image: page?.image ?? "",
+          fileUrl: page?.fileUrl ?? "",
           translations: Object.fromEntries(
             (page?.translations ?? []).map((t) => [t.locale as Locale, { title: t.title, blocks: parseBlocks(t.blocks) }]),
           ),

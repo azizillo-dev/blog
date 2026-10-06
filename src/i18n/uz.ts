@@ -22,6 +22,7 @@ const uz: Dictionary = {
     experience: "Tajriba",
     education: "Ta'lim",
     skills: "Ko'nikmalar",
+    cv: "CV yuklab olish",
     present: "Hozirgacha",
     years: "{n} yil",
     months: "{n} oy",

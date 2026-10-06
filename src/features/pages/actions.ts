@@ -13,6 +13,7 @@ export async function savePageAction(key: string, _: ActionState, fd: FormData):
     const input = readLocalized(fd, ["title", "blocks"], "title").map((t) => ({ ...t, blocks: validateBlocksJson(t.blocks) }));
     if (input.length === 0) return { error: "Kamida bitta tilda sarlavha kiriting." };
     const image = str(fd, "image");
+    const fileUrl = str(fd, "fileUrl").slice(0, 2000); // CV (PDF) havolasi
     const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "blocks"], {
       overwrite: bool(fd, "retranslate"),
       blockFields: ["blocks"],
@@ -20,8 +21,8 @@ export async function savePageAction(key: string, _: ActionState, fd: FormData):
 
     await db.page.upsert({
       where: { key },
-      create: { key, image, translations: { create: translations } },
-      update: { image, translations: { deleteMany: {}, create: translations } },
+      create: { key, image, fileUrl, translations: { create: translations } },
+      update: { image, fileUrl, translations: { deleteMany: {}, create: translations } },
     });
     revalidateSite();
     return { ok: true, message: "Saqlandi ✔" + translationNote(translated, failed) };

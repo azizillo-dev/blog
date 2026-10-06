@@ -66,6 +66,7 @@ model Page {
   id           String            @id @default(cuid())
   key          String            @unique
   image        String            @default("")
+  fileUrl      String            @default("") // "about" sahifasi uchun — CV (PDF)
   translations PageTranslation[]
   updatedAt    DateTime          @updatedAt
 }

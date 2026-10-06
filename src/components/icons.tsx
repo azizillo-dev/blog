@@ -57,6 +57,12 @@ export const ExternalIcon = ({ size = 16, ...p }: IconProps) => (
   </svg>
 );
 
+export const DownloadIcon = ({ size = 16, ...p }: IconProps) => (
+  <svg {...base(size, p)} {...stroke}>
+    <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2" />
+  </svg>
+);
+
 /* ---------- Ijtimoiy tarmoqlar ---------- */
 const brand: Record<string, (p: IconProps) => React.ReactElement> = {
   telegram: ({ size = 20, ...p }) => (

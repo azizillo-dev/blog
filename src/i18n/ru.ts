@@ -22,6 +22,7 @@ const ru: Dictionary = {
     experience: "Опыт работы",
     education: "Образование",
     skills: "Навыки",
+    cv: "Скачать резюме",
     present: "Настоящее время",
     years: "{n} г.",
     months: "{n} мес.",
