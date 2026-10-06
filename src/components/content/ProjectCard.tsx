@@ -27,12 +27,16 @@ export function ProjectCard({ project, t, common, index }: Props) {
         />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h2 className="line-clamp-2 text-xl font-bold leading-snug tracking-tight">{project.title}</h2>
-        {project.description && <ExpandableText text={project.description} lines={4} labels={common} className="mt-2" />}
+        {/* min-h — sarlavha bir yoki ikki qator bo'lishidan qat'i nazar bir xil joy egallaydi */}
+        <h2 className="line-clamp-2 min-h-[2.75em] text-xl font-bold leading-snug tracking-tight">{project.title}</h2>
+        <ExpandableText text={project.description} lines={4} labels={common} className="mt-2" />
         <div className="mt-auto pt-5">
-          <TechList items={project.technologies} max={8} />
+          {/* Ikki qatorlik joy ajratiladi — texnologiyalar soni har xil bo'lsa ham karta balandligi o'zgarmaydi */}
+          <div className="min-h-[3.5rem] content-start">
+            <TechList items={project.technologies} max={8} />
+          </div>
           {(project.demoUrl || project.sourceUrl) && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {project.demoUrl && (
                 <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} bg-accent text-accent-fg`}>
                   {t.demo} <ExternalIcon />

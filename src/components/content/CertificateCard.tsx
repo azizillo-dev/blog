@@ -34,14 +34,14 @@ export function CertificateCard({ certificate: c, locale, t, common, index }: Pr
         </div>
       </Lightbox>
       <div className="flex flex-1 flex-col p-5">
-        <h2 className="line-clamp-2 text-lg font-bold leading-snug">{c.title}</h2>
+        <h2 className="line-clamp-2 min-h-[2.75em] text-lg font-bold leading-snug">{c.title}</h2>
         <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
           <dt className="text-muted">{t.issuedBy}</dt>
           <dd className="truncate font-medium">{c.issuer}</dd>
           <dt className="text-muted">{t.issuedOn}</dt>
           <dd className="font-medium">{formatDate(c.issuedAt, locale)}</dd>
         </dl>
-        {c.description && <ExpandableText text={c.description} lines={4} labels={common} className="mt-3 text-sm" />}
+        <ExpandableText text={c.description} lines={4} labels={common} className="mt-3 text-sm" />
         {c.url && (
           <a
             href={c.url}
