@@ -13,7 +13,9 @@ export const routes = {
     return `/${l}/s/${slug}`;
   },
   certificates: (l: Locale) => `/${l}/certificates`,
+  certificate: (l: Locale, slug: string) => `/${l}/certificates/${slug}`,
   projects: (l: Locale) => `/${l}/projects`,
+  project: (l: Locale, slug: string) => `/${l}/projects/${slug}`,
   privateLogin: (l: Locale) => `/${l}/private/login`,
 };
 

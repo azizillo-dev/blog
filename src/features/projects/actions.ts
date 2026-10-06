@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/auth/session";
 import { bool, readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
 import { revalidateSite } from "@/features/admin/revalidate";
 import { autoTranslate, translationNote } from "@/features/admin/translate";
+import { uniqueSlug } from "@/features/admin/slug";
 import { parseTechnologies } from "./technologies";
 
 const optionalUrl = z.union([z.literal(""), z.string().url("to'g'ri URL kiriting").max(500)]);
@@ -35,11 +36,12 @@ export async function saveProjectAction(id: string | null, _: ActionState, fd: F
     const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "description"], {
       overwrite: bool(fd, "retranslate"),
     });
+    const slug = await uniqueSlug(input[0].title, (s) => db.project.findUnique({ where: { slug: s }, select: { id: true } }), id);
 
     if (id) {
-      await db.project.update({ where: { id }, data: { ...data, translations: { deleteMany: {}, create: translations } } });
+      await db.project.update({ where: { id }, data: { ...data, slug, translations: { deleteMany: {}, create: translations } } });
     } else {
-      await db.project.create({ data: { ...data, translations: { create: translations } } });
+      await db.project.create({ data: { ...data, slug, translations: { create: translations } } });
     }
     revalidateSite();
     return { ok: true, message: (id ? "Saqlandi ✔" : "Loyiha qo'shildi ✔") + translationNote(translated, failed) };

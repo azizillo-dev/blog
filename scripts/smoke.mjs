@@ -20,6 +20,8 @@ const checks = [
   { path: "/ru", status: 200, contains: "Последние посты" },
   { path: "/en", status: 200, contains: "Recent posts" },
   { path: "/en/blog/does-not-exist", status: 404 },
+  { path: "/uz/projects/does-not-exist", status: 404 },
+  { path: "/uz/certificates/does-not-exist", status: 404 },
   { path: "/uz/certificates", status: 200, contains: "Sertifikatlar" },
   { path: "/en/it", status: 200, contains: "IT career" },
   { path: "/en/private", status: 200, contains: "This section is locked" },
@@ -31,9 +33,12 @@ const checks = [
 
 // Haqiqiy post manzilini sitemap'dan olamiz — test demo kontentga bog'lanib qolmasin
 const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
-const postUrl = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).find((u) => u.includes("/blog/"));
-if (postUrl) checks.push({ path: new URL(postUrl).pathname, status: 200 });
-else console.log("· sitemap'da post topilmadi — post tekshiruvi o'tkazib yuborildi");
+const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+for (const part of ["/blog/", "/projects/", "/certificates/"]) {
+  const found = urls.find((u) => u.includes(part));
+  if (found) checks.push({ path: new URL(found).pathname, status: 200 });
+  else console.log(`· sitemap'da ${part} sahifasi topilmadi — tekshiruv o'tkazib yuborildi`);
+}
 
 // Private bo'limdagi post ommaviy blog yo'li orqali ochilmasligi kerak
 const privateSlug = process.env.PRIVATE_SLUG;

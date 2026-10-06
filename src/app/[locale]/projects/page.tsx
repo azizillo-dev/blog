@@ -27,7 +27,7 @@ export default async function ProjectsPage({ params }: Params) {
       {projects.length === 0 && <p className="py-16 text-center text-muted">{t.empty}</p>}
       <div className={cn("grid auto-rows-fr items-stretch gap-6 sm:gap-8", projects.length === 1 ? "mx-auto max-w-2xl" : "sm:grid-cols-2")}>
         {projects.map((p, i) => (
-          <ProjectCard key={p.id} project={p} t={t} common={dict.common} index={i} />
+          <ProjectCard key={p.id} project={p} locale={locale} index={i} />
         ))}
       </div>
     </Container>

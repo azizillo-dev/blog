@@ -26,7 +26,7 @@ export default async function CertificatesPage({ params }: Params) {
       {/* auto-rows-fr — barcha qatorlar bir xil balandlikda */}
       <div className="grid auto-rows-fr items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {certificates.map((c, i) => (
-          <CertificateCard key={c.id} certificate={c} locale={locale} t={t} common={dict.common} index={i} />
+          <CertificateCard key={c.id} certificate={c} locale={locale} t={t} index={i} />
         ))}
       </div>
     </Container>

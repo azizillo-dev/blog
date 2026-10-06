@@ -1,21 +1,19 @@
-import type { Dictionary } from "@/i18n";
+import Link from "next/link";
+import type { Locale } from "@/lib/constants";
 import type { ProjectView } from "@/features/projects/queries";
-import { ExternalIcon, SocialIcon } from "@/components/icons";
+import { routes } from "@/lib/routes";
 import { Cover } from "./Cover";
-import { ExpandableText } from "./ExpandableText";
 import { TechList } from "./TechList";
 
-type Props = { project: ProjectView; t: Dictionary["projects"]; common: Dictionary["common"]; index: number };
+type Props = { project: ProjectView; locale: Locale; index: number };
 
-const linkClass =
-  "inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-semibold transition-[transform,background-color] active:scale-95";
-
-/** Barcha kartalar bir xil balandlikda: tavsif yig'iladi, texnologiyalar va havolalar doim pastda. */
-export function ProjectCard({ project, t, common, index }: Props) {
+/** Butun karta — batafsil sahifaga havola. Balandlik qat'iy: sarlavha 2 qator, tavsif 3 qator. */
+export function ProjectCard({ project, locale, index }: Props) {
   return (
-    <article
+    <Link
+      href={routes.project(locale, project.slug)}
       style={{ "--i": index } as React.CSSProperties}
-      className="reveal group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-card"
+      className="reveal group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-card transition-[transform,border-color] duration-200 hover:-translate-y-1 hover:border-accent/40"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-surface-2">
         <Cover
@@ -27,30 +25,14 @@ export function ProjectCard({ project, t, common, index }: Props) {
         />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        {/* min-h — sarlavha bir yoki ikki qator bo'lishidan qat'i nazar bir xil joy egallaydi */}
-        <h2 className="line-clamp-2 min-h-[2.75em] text-xl font-bold leading-snug tracking-tight">{project.title}</h2>
-        <ExpandableText text={project.description} lines={4} labels={common} className="mt-2" />
-        <div className="mt-auto pt-5">
-          {/* Ikki qatorlik joy ajratiladi — texnologiyalar soni har xil bo'lsa ham karta balandligi o'zgarmaydi */}
-          <div className="min-h-[3.5rem] content-start">
-            <TechList items={project.technologies} max={8} />
-          </div>
-          {(project.demoUrl || project.sourceUrl) && (
-            <div className="mt-2 flex flex-wrap gap-2">
-              {project.demoUrl && (
-                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} bg-accent text-accent-fg`}>
-                  {t.demo} <ExternalIcon />
-                </a>
-              )}
-              {project.sourceUrl && (
-                <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} border border-border hover:bg-surface-2`}>
-                  <SocialIcon platform={project.sourceUrl.includes("github.com") ? "github" : "website"} size={16} /> {t.source}
-                </a>
-              )}
-            </div>
-          )}
+        <h2 className="line-clamp-2 min-h-[2.75em] text-xl font-bold leading-snug tracking-tight transition-colors group-hover:text-accent">
+          {project.title}
+        </h2>
+        <p className="mt-2 line-clamp-3 min-h-[4.875em] whitespace-pre-line leading-relaxed text-muted">{project.description}</p>
+        <div className="mt-auto min-h-[3.5rem] content-start pt-5">
+          <TechList items={project.technologies} max={6} />
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

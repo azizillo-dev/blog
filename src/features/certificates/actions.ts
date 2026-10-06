@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth/session";
 import { bool, readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
 import { autoTranslate, translationNote } from "@/features/admin/translate";
+import { uniqueSlug } from "@/features/admin/slug";
 import { revalidateSite } from "@/features/admin/revalidate";
 
 const certificateSchema = z.object({
@@ -30,11 +31,12 @@ export async function saveCertificateAction(id: string | null, _: ActionState, f
     const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "description"], {
       overwrite: bool(fd, "retranslate"),
     });
+    const slug = await uniqueSlug(input[0].title, (s) => db.certificate.findUnique({ where: { slug: s }, select: { id: true } }), id);
 
     if (id) {
-      await db.certificate.update({ where: { id }, data: { ...data, translations: { deleteMany: {}, create: translations } } });
+      await db.certificate.update({ where: { id }, data: { ...data, slug, translations: { deleteMany: {}, create: translations } } });
     } else {
-      await db.certificate.create({ data: { ...data, translations: { create: translations } } });
+      await db.certificate.create({ data: { ...data, slug, translations: { create: translations } } });
     }
     revalidateSite();
     return { ok: true, message: (id ? "Saqlandi ✔" : "Sertifikat qo'shildi ✔") + translationNote(translated, failed) };
