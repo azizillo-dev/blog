@@ -114,10 +114,18 @@ try {
   step("loyiha qo'shildi");
 
   await page.goto(`${BASE}/uz/projects`);
-  const card = page.locator("article", { hasText: projectTitle });
+  // Karta — batafsil sahifaga havola
+  const card = page.locator("main a", { hasText: projectTitle });
   await card.waitFor();
   assert.deepEqual(await card.locator("li").allTextContents(), ["Next.js", "Go"]);
   step("loyiha saytda: texnologiyalar takrorsiz");
+
+  await card.click();
+  await page.waitForURL(/\/uz\/projects\/.+/);
+  assert.equal(await page.locator("h1").textContent(), projectTitle);
+  await page.getByRole("link", { name: /Orqaga/ }).click();
+  await page.waitForURL(`${BASE}/uz/projects`);
+  step("karta → batafsil sahifa → orqaga");
 
   await page.goto(`${BASE}/admin/projects`);
   const item = page.locator("details", { hasText: projectTitle });
