@@ -16,7 +16,6 @@ import { parseTechnologies } from "@/features/projects/technologies";
 import { formatPeriod } from "@/features/resume/period";
 import { blocksToPlainText } from "@/lib/content/blocks";
 import type { CodeProfile } from "@/features/about/profile";
-import { Container } from "@/components/layout/Container";
 import { AboutIntro } from "@/components/content/AboutIntro";
 import { ResumeSection } from "@/components/content/ResumeSection";
 import { TechList } from "@/components/content/TechList";
@@ -96,7 +95,7 @@ export default async function AboutPage({ params }: Params) {
   );
 
   return (
-    <Container size="prose">
+    <>
       <CodeSpace
         profile={profile}
         labels={{
@@ -109,7 +108,7 @@ export default async function AboutPage({ params }: Params) {
         }}
         classic={classic}
       />
-    </Container>
+    </>
   );
 }
 

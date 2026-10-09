@@ -5,6 +5,7 @@ import type { CodeProfile } from "@/features/about/profile";
 import { buildFiles } from "@/features/about/files";
 import type { CommandLabels } from "@/features/about/commands";
 import { applyTheme, currentTheme } from "@/lib/theme-client";
+import { Container } from "@/components/layout/Container";
 import { BootScreen } from "./BootScreen";
 import { IdeWindow } from "./IdeWindow";
 import { Terminal } from "./Terminal";
@@ -54,12 +55,12 @@ export function CodeSpace({ profile, labels, classic }: Props) {
   // Server bilan bir xil bo'lishi uchun: tanlov o'qilmaguncha oddiy ko'rinish turadi
   if (!ready || plain) {
     return (
-      <>
+      <Container size="prose">
         <div className="flex justify-end pt-6">
           <ViewToggle label={labels.codeView} onClick={() => choose("code")} />
         </div>
         {classic}
-      </>
+      </Container>
     );
   }
 
@@ -67,7 +68,7 @@ export function CodeSpace({ profile, labels, classic }: Props) {
     <>
       {booting && <BootScreen lines={labels.boot} skipLabel={labels.skip} onDone={finishBoot} />}
 
-      <div className="py-8 sm:py-12">
+      <Container size="wide" className="py-8 sm:py-12">
         <div className="mb-3 flex justify-end">
           <ViewToggle label={labels.plainView} onClick={() => choose("plain")} />
         </div>
@@ -81,7 +82,7 @@ export function CodeSpace({ profile, labels, classic }: Props) {
             onPlain={() => choose("plain")}
           />
         </IdeWindow>
-      </div>
+      </Container>
 
       {/* Oddiy ko'rinish DOM'da qoladi (SEO va skrinriderlar uchun), lekin ko'rinmaydi */}
       <div hidden>{classic}</div>

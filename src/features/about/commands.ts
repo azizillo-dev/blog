@@ -1,6 +1,6 @@
 import type { CodeProfile } from "./profile";
 
-export type OutLine = { text: string; tone?: "muted" | "accent" | "error" | "link"; href?: string };
+export type OutLine = { text: string; tone?: "muted" | "accent" | "error" | "link"; href?: string; /** qatorni o'ramasdan ko'rsatish (neofetch ustunlari) */ pre?: boolean };
 export type CommandResult = { lines: OutLine[]; action?: { type: "clear" } | { type: "theme" } | { type: "plain" } | { type: "open"; href: string } };
 
 export const COMMANDS = [
@@ -190,12 +190,13 @@ export function runCommand(input: string, profile: CodeProfile, t: CommandLabels
 const LOGO = ["   ╭───────╮", "   │  ◉ ◉  │", "   │   ▾   │", "   ╰───────╯", "   </ dev >"];
 
 function neofetch(profile: CodeProfile): OutLine[] {
+  const cut = (s: string, n = 34) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
   const info: string[] = [
     `${profile.name}`,
     "─".repeat(Math.max(8, profile.name.length)),
     profile.role && `role:     ${profile.role}`,
-    profile.education[0] && `edu:      ${profile.education[0].org}`,
-    profile.skills.length > 0 && `stack:    ${profile.skills.slice(0, 4).join(", ")}`,
+    profile.education[0] && `edu:      ${cut(profile.education[0].org)}`,
+    profile.skills.length > 0 && `stack:    ${cut(profile.skills.slice(0, 4).join(", "))}`,
     `posts:    ${profile.counts.posts}`,
     `projects: ${profile.counts.projects}`,
     `certs:    ${profile.counts.certificates}`,
@@ -203,9 +204,10 @@ function neofetch(profile: CodeProfile): OutLine[] {
   ].filter((x): x is string => Boolean(x));
 
   const rows = Math.max(LOGO.length, info.length);
-  return Array.from({ length: rows }, (_, i) =>
-    p(`${(LOGO[i] ?? "").padEnd(14)}${info[i] ?? ""}`, i === LOGO.length ? "muted" : undefined),
-  );
+  return Array.from({ length: rows }, (_, i) => ({
+    text: `${(LOGO[i] ?? "").padEnd(14)}${info[i] ?? ""}`,
+    pre: true,
+  }));
 }
 
 /** Tab bilan to'ldirish uchun. */

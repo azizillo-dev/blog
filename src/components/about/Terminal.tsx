@@ -99,7 +99,7 @@ export function Terminal({ profile, labels, hint, onTheme, onPlain }: Props) {
                   {line.text}
                 </a>
               ) : (
-                <p key={k} className={cn("whitespace-pre-wrap break-words", line.tone && TONE[line.tone])}>
+                <p key={k} className={cn(line.pre ? "overflow-x-auto whitespace-pre" : "whitespace-pre-wrap break-words", line.tone && TONE[line.tone])}>
                   {line.text || " "}
                 </p>
               ),
