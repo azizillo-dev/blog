@@ -25,6 +25,8 @@
 
 | 17 | Private'dan email tasdiqlash olib tashlandi; maxfiy sahifa (7 sahna, tashrif statistikasi); About → code space (boot + IDE + terminal) | [x] | vitest 37/37, jonli: smoke ✔, admin E2E ✔, code space E2E (boot, fayllar, terminal buyruqlari, Tab/↑, oddiy ko'rinish) ✔ | maxfiy sahifa manzili admin'dan; IP xom saqlanmaydi (xesh); mobil grid uchun `minmax(0,1fr)` shart |
 
+| 18 | About: IDE/terminal olib tashlandi (foydalanuvchiga yoqmadi) → koinot sahnasi + klassik bo'limlar | [x] | vitest 29/29, jonli: smoke ✔, boot 4,5–5,5 s va qaytib kelganda qayta ishlaydi, telefon/desktop overflow=0 | CSS'da `display` berilsa Tailwind `hidden` ni bosib ketadi; `.reveal` bo'limlar skrollgacha opacity 0 (fullPage skrinshotda bo'sh ko'rinadi) |
+
 ## Log
 
 - 2026-09-19: C diskda joy tugadi (ENOSPC) → npm kesh tozalandi (~6 GB). Yana chiqsa: `%LOCALAPPDATA%\npm-cache\_cacache` ni o'chiring.

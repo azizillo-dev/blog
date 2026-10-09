@@ -11,12 +11,12 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
 
 - **Bosh sahifa** (`/uz`, logo) — so'nggi 4 post 2×2 (telefonda ham 2 ustun) + "Barcha postlarni ko'rish" →
   `/posts` (2 ustun, 10 tadan pagination `?page=N`).
-- **Blog** menyusi (`/uz/blog`) — muallif haqida, ikki ko'rinishda:
-  - **Code space** (standart): boot ekrani → IDE (fayllar: about.md, experience.json, education.sql, skills.ts,
-    projects.json, contact.sh) → ishlaydigan terminal. Mantiq `features/about/` da: `files.ts` (profil → fayllar),
-    `highlight.ts` (yengil sintaksis bo'yash), `commands.ts` (buyruqlar, sof funksiya + `CommandLabels` tarjimasi).
-  - **Oddiy**: matn/rasm bloklari + Tajriba + Ta'lim + Ko'nikmalar. Tugma bilan almashadi (`localStorage`),
-    serverda render qilinadi va DOM'da qoladi — SEO buzilmaydi.
+- **Blog** menyusi (`/uz/blog`) — muallif haqida:
+  - `BootGate` → har ochilganda terminal uslubidagi yuklanish ekrani (~4,5 s, `BootScreen`, skip bor,
+    `prefers-reduced-motion` da o'tkazib yuboriladi). Hech qayerda eslab qolinmaydi — qaytib kelganda qayta ishlaydi.
+  - `CosmicHero` — koinot foni (3 qatlam yulduz + 2 raketa, faqat CSS), chapda avatar va orbita, o'ngda nom,
+    yozilayotgan kod qatori, stack chiplari, CV va ijtimoiy havolalar, pastda raqamlar.
+  - Keyin klassik qism: matn bloklari + Tajriba + Ta'lim + Ko'nikmalar (serverda render, SEO uchun).
   - Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
 - Admin paneldan yangi bo'limlar (section) qo'shish.
 - **More** menyusi:
