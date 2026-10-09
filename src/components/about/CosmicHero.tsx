@@ -13,7 +13,9 @@ type Props = {
 
 /** Koinot fonidagi tanishuv: chapda rasm, o'ngda kod uslubidagi kartochka. Butunlay CSS — JS yo'q. */
 export function CosmicHero({ name, role, avatar, stack, cv, socials, stats }: Props) {
-  const codeLine = `const dev = { stack: ${JSON.stringify(stack.slice(0, 3))} }`;
+  // Telefonda sig'ishi uchun qisqa va uzunroq variant — biri mobil, biri desktop uchun
+  const shortLine = `const dev = { stack: ${JSON.stringify(stack.slice(0, 2))} }`;
+  const longLine = `const dev = { stack: ${JSON.stringify(stack.slice(0, 3))} }`;
 
   return (
     <section className="cosmos -mx-4 rounded-none px-4 py-14 text-white sm:-mx-6 sm:rounded-3xl sm:px-8 sm:py-16">
@@ -49,8 +51,9 @@ export function CosmicHero({ name, role, avatar, stack, cv, socials, stats }: Pr
           <h1 className="mt-2 break-words text-3xl font-extrabold tracking-tight sm:text-4xl">{name}</h1>
           {role && <p className="mt-1.5 text-white/70">{role}</p>}
 
-          <p className="mt-4 overflow-hidden font-mono text-[11px] text-emerald-300/90 sm:text-xs">
-            <span className="typeline">{codeLine}</span>
+          <p className="mt-4 overflow-hidden font-mono text-[10px] text-emerald-300/90 sm:text-xs">
+            <span className="typeline sm:hidden">{shortLine}</span>
+            <span className="typeline hidden sm:inline-block">{longLine}</span>
           </p>
 
           {stack.length > 0 && (
