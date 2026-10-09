@@ -155,6 +155,49 @@ model ResumeEntryTranslation {
   @@unique([entryId, locale])
 }
 
+// Maxfiy sahifa: menyuda yo'q, faqat havolani bilgan kirsadi. Manzili (slug) admin paneldan o'zgaradi.
+model SecretPage {
+  id        String        @id @default(cuid())
+  key       String        @unique @default("secret")
+  slug      String        @unique @default("5201314")
+  title     String        @default("")
+  intro     String        @default("")
+  nextLabel String        @default("Keyingisi")
+  visible   Boolean       @default(true)
+  // Bo'sh bo'lsa — faqat maxfiy manzil. To'ldirilsa, sahifa parol so'raydi (admin paneldan belgilanadi).
+  passwordHash String     @default("")
+  scenes    SecretScene[]
+  visits    SecretVisit[]
+  updatedAt DateTime      @updatedAt
+}
+
+model SecretScene {
+  id      String     @id @default(cuid())
+  pageId  String
+  page    SecretPage @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  kind    String // WALL | STORY | GIFT | SCRATCH | GALLERY | HEARTS | QUIZ
+  order   Int        @default(0)
+  visible Boolean    @default(true)
+  data    String     @default("{}") // JSON — har sahnaning o'z maydonlari (features/secret/schema.ts)
+
+  @@index([pageId, order])
+}
+
+// Tashriflar. Xom IP saqlanmaydi — faqat sho'rlangan hash (takroriy tashrifni ajratish uchun).
+model SecretVisit {
+  id        String     @id @default(cuid())
+  pageId    String
+  page      SecretPage @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  ipHash    String
+  country   String     @default("")
+  city      String     @default("")
+  device    String     @default("")
+  referrer  String     @default("")
+  createdAt DateTime   @default(now())
+
+  @@index([pageId, createdAt])
+}
+
 model SocialLink {
   id       String  @id @default(cuid())
   platform String // ikon kaliti: telegram | github | linkedin | youtube | instagram | x | email | leetcode | website ...

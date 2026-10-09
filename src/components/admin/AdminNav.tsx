@@ -16,6 +16,7 @@ const LINKS = [
   { href: "/admin/about", label: "Blog: Men haqimda" },
   { href: "/admin/resume", label: "Blog: Tajriba va ta'lim" },
   { href: "/admin/projects", label: "Loyihalar" },
+  { href: "/admin/secret", label: "Maxfiy sahifa" },
   { href: "/admin/socials", label: "Ijtimoiy tarmoqlar" },
   { href: "/admin/requests", label: "Private so'rovlar" },
   { href: "/admin/settings", label: "Sozlamalar" },

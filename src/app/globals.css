@@ -111,6 +111,53 @@ body {
   }
 }
 
+/* ---------- Maxfiy sahifa sahnalari ---------- */
+
+/* Umumiy yumshoq tugma */
+.btn-soft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-card, 0 1px 2px rgb(0 0 0 / 0.06));
+  transition: transform 0.2s var(--ease-out);
+}
+.btn-soft:hover { transform: translateY(-2px); }
+.btn-soft:active { transform: scale(0.97); }
+
+/* Havo shari ko'tarilishi */
+@keyframes balloon-rise {
+  from { transform: translateY(60%) scale(0.85); opacity: 0; }
+  to { transform: translateY(-10%) scale(1); opacity: 1; }
+}
+.balloon-rise {
+  animation: balloon-rise 1.5s var(--ease-out) both;
+}
+
+/* Yurakning uchib ketishi */
+@keyframes heart-float {
+  from { transform: translate(-50%, 0) scale(0.6); opacity: 1; }
+  to { transform: translate(calc(-50% + var(--drift, 0px)), -220px) scale(1.2); opacity: 0; }
+}
+.heart-float {
+  animation: heart-float 2.2s var(--ease-out) forwards;
+}
+
+/* Tilaklar devori foni */
+.wall-bg {
+  background-color: color-mix(in oklab, var(--surface-2) 70%, transparent);
+  background-image: radial-gradient(color-mix(in oklab, var(--fg) 7%, transparent) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .balloon-rise, .heart-float { animation-duration: 0.01ms; }
+}
+
 /* Theme almashishi — View Transitions bilan aylana effekti */
 ::view-transition-old(root),
 ::view-transition-new(root) {
