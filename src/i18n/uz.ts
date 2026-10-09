@@ -87,7 +87,7 @@ const uz: Dictionary = {
     },
   },
   codespace: {
-    boot: ["initializing code space…", "profile.json yuklandi", "experience va education ulandi", "terminal tayyor"],
+    boot: ["initializing code space…", "env yuklandi (uz · dark)", "profile.json o‘qildi", "experience va education ulandi", "skills.ts kompilyatsiya qilindi", "leetcode bilan sinxronlashtirildi", "terminal tayyor"],
     skip: "o'tkazib yuborish",
     plainView: "Oddiy ko'rinish",
     codeView: "Kod ko'rinishi</>",

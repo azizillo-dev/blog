@@ -87,7 +87,7 @@ const ru: Dictionary = {
     },
   },
   codespace: {
-    boot: ["initializing code space…", "profile.json загружен", "experience и education подключены", "терминал готов"],
+    boot: ["initializing code space…", "env загружен (ru · dark)", "profile.json прочитан", "experience и education подключены", "skills.ts скомпилирован", "синхронизация с leetcode", "терминал готов"],
     skip: "пропустить",
     plainView: "Обычный вид",
     codeView: "Вид кода</>",

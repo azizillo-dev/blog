@@ -85,7 +85,7 @@ const en = {
     },
   },
   codespace: {
-    boot: ["initializing code space…", "profile.json loaded", "experience and education mounted", "terminal ready"],
+    boot: ["initializing code space…", "env loaded (en · dark)", "profile.json parsed", "experience and education mounted", "skills.ts compiled", "synced with leetcode", "terminal ready"],
     skip: "skip",
     plainView: "Plain view",
     codeView: "Code view</>",
