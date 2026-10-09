@@ -26,7 +26,8 @@ export function IdeWindow({ files, name, children }: Props) {
         <p className="ml-2 truncate font-mono text-xs text-[#637777]">{name} — {file?.name}</p>
       </div>
 
-      <div className="grid sm:grid-cols-[11rem_1fr]">
+      {/* minmax(0,1fr) — ustun kontent kengligiga qarab cho'zilmasin (tablar va uzun qatorlar) */}
+      <div className="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-[11rem_minmax(0,1fr)]">
         {/* fayllar */}
         <nav aria-label="Fayllar" className="border-b border-white/10 sm:border-b-0 sm:border-r">
           <p className="px-3 pt-3 font-mono text-[11px] uppercase tracking-wider text-[#4b5a70]">Explorer</p>
