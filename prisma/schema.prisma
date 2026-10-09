@@ -170,16 +170,13 @@ model Setting {
 }
 
 model AccessRequest {
-  id            String   @id @default(cuid())
-  email         String
-  message       String
-  locale        String   @default("uz")
-  codeHash      String
-  codeExpiresAt DateTime
-  attempts      Int      @default(0)
-  status        String   @default("UNVERIFIED") // UNVERIFIED | PENDING | APPROVED | REJECTED
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String   @id @default(cuid())
+  email     String
+  message   String
+  locale    String   @default("uz")
+  status    String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([status, createdAt])
   @@index([email])

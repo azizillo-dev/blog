@@ -4,22 +4,18 @@ import Link from "next/link";
 import { useActionState } from "react";
 import type { Locale } from "@/lib/constants";
 import type { Dictionary } from "@/i18n";
-import { requestAccessAction, verifyCodeAction, type GateState } from "@/features/private/actions";
+import { requestAccessAction, type GateState } from "@/features/private/actions";
 import { routes } from "@/lib/routes";
-import { format } from "@/i18n";
 import { ActionForm, Field, Input, SubmitButton, Textarea } from "@/components/ui/form";
 import { LockIcon } from "@/components/icons";
 
 type T = Dictionary["private"];
 
-/**
- * Private bo'lim "darvozasi": so'rov → email kodi → kutish.
- * Ikkala action bir xil GateState qaytaradi — bitta holat mashinasi, oxirgi javob qaysi qadamda ekanini aytadi.
- */
+/** Private bo'lim "darvozasi": email + xabar → so'rov adminga ketadi → kutish. */
 export function PrivateGate({ locale, t }: { locale: Locale; t: T }) {
   const [state, dispatch] = useActionState(
-    (prev: GateState, fd: FormData) => (fd.has("requestId") ? verifyCodeAction(prev, fd) : requestAccessAction(locale, prev, fd)),
-    { step: "request" },
+    (prev: GateState, fd: FormData) => requestAccessAction(locale, prev, fd),
+    { step: "request" } as GateState,
   );
   const error = "error" in state && state.error ? t.errors[state.error] : null;
 
@@ -29,12 +25,8 @@ export function PrivateGate({ locale, t }: { locale: Locale; t: T }) {
         <span className="mb-4 grid size-14 place-items-center rounded-2xl bg-accent-soft text-accent">
           <LockIcon size={26} />
         </span>
-        <h1 className="text-2xl font-extrabold tracking-tight">
-          {state.step === "code" ? t.codeSentTitle : state.step === "pending" ? t.pendingTitle : t.lockedTitle}
-        </h1>
-        <p className="mt-2 text-sm leading-relaxed text-muted">
-          {state.step === "code" ? format(t.codeSentText, { email: state.email }) : state.step === "pending" ? t.pendingText : t.lockedText}
-        </p>
+        <h1 className="text-2xl font-extrabold tracking-tight">{state.step === "pending" ? t.pendingTitle : t.lockedTitle}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{state.step === "pending" ? t.pendingText : t.lockedText}</p>
       </div>
 
       {state.step === "request" && (
@@ -45,28 +37,12 @@ export function PrivateGate({ locale, t }: { locale: Locale; t: T }) {
           <Field label={t.message}>
             <Textarea name="message" placeholder={t.messagePlaceholder} required minLength={5} maxLength={1000} />
           </Field>
-          {error && <ErrorText>{error}</ErrorText>}
+          {error && (
+            <p role="alert" className="rounded-xl bg-red-500/10 px-3.5 py-2.5 text-sm font-medium text-red-500">
+              {error}
+            </p>
+          )}
           <SubmitButton className="w-full">{t.send}</SubmitButton>
-        </ActionForm>
-      )}
-
-      {state.step === "code" && (
-        <ActionForm action={dispatch} className="space-y-4">
-          <input type="hidden" name="requestId" value={state.requestId} />
-          <Field label={t.code}>
-            <Input
-              name="code"
-              inputMode="numeric"
-              autoComplete="one-time-code"
-              pattern="\d{6}"
-              maxLength={6}
-              required
-              autoFocus
-              className="text-center font-mono text-2xl tracking-[0.5em]"
-            />
-          </Field>
-          {error && <ErrorText>{error}</ErrorText>}
-          <SubmitButton className="w-full">{t.verify}</SubmitButton>
         </ActionForm>
       )}
 
@@ -80,8 +56,4 @@ export function PrivateGate({ locale, t }: { locale: Locale; t: T }) {
       )}
     </div>
   );
-}
-
-function ErrorText({ children }: { children: React.ReactNode }) {
-  return <p role="alert" className="rounded-xl bg-red-500/10 px-3.5 py-2.5 text-sm font-medium text-red-500">{children}</p>;
 }

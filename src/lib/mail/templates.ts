@@ -13,15 +13,6 @@ function render(to: string, { subject, lines }: Template): MailMessage {
   return { to, subject, text: lines.join("\n\n"), html };
 }
 
-export function verificationCodeMail(to: string, code: string, locale: Locale): MailMessage {
-  const t: Record<Locale, Template> = {
-    uz: { subject: `Tasdiqlash kodi: ${code}`, lines: [`Sizning tasdiqlash kodingiz: ${code}`, "Kod 10 daqiqa amal qiladi."] },
-    ru: { subject: `Код подтверждения: ${code}`, lines: [`Ваш код подтверждения: ${code}`, "Код действует 10 минут."] },
-    en: { subject: `Verification code: ${code}`, lines: [`Your verification code: ${code}`, "The code is valid for 10 minutes."] },
-  };
-  return render(to, t[locale]);
-}
-
 export function accessGrantedMail(to: string, password: string, loginUrl: string, locale: Locale): MailMessage {
   const t: Record<Locale, Template> = {
     uz: {

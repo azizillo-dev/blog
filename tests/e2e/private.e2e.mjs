@@ -1,6 +1,6 @@
 /**
- * Private oqimi E2E: so'rov → email kodi → admin ruxsati → parol → login → private postlar.
- * Dev rejimida (SMTP yo'q) xatlar `.mail-outbox/` ga yoziladi — kod va parol o'sha yerdan o'qiladi.
+ * Private oqimi E2E: so'rov → admin ruxsati → parol emailga → login → private postlar.
+ * Dev rejimida (SMTP yo'q) xatlar `.mail-outbox/` ga yoziladi — parol o'sha yerdan o'qiladi.
  *   ADMIN_EMAIL=... ADMIN_PASSWORD=... node tests/e2e/private.e2e.mjs
  */
 import { chromium } from "playwright-core";
@@ -36,20 +36,12 @@ try {
   await guest.fill('input[name="email"]', guestEmail);
   await guest.fill('textarea[name="message"]', "Hi! I am a friend, please let me in.");
   await guest.getByRole("button", { name: "Request access" }).click();
-  await guest.getByRole("heading", { name: "Check your inbox" }).waitFor();
-  step("so'rov yuborildi, kod emailga ketdi");
-
-  // 2. Noto'g'ri, keyin to'g'ri kod
-  const code = await lastMailTo(guestEmail, /code: (\d{6})/);
-  await guest.fill('input[name="code"]', code === "000000" ? "111111" : "000000");
-  await guest.getByRole("button", { name: "Confirm" }).click();
-  await guest.getByText("Invalid or expired code.").waitFor();
-  await guest.fill('input[name="code"]', code);
-  await guest.getByRole("button", { name: "Confirm" }).click();
+  // Email tasdiqlash yo'q — so'rov to'g'ridan-to'g'ri adminga ketadi
   await guest.getByRole("heading", { name: "Request sent" }).waitFor();
-  step("kod tasdiqlandi → PENDING");
+  assert.equal((await db.accessRequest.findFirst({ where: { email: guestEmail } }))?.status, "PENDING");
+  step("so'rov yuborildi → darhol PENDING (kod so'ralmadi)");
 
-  // 3. Admin ruxsat beradi
+  // 2. Admin ruxsat beradi
   await admin.goto(`${BASE}/admin/login`);
   await admin.fill('input[name="email"]', ADMIN_EMAIL);
   await admin.fill('input[name="password"]', ADMIN_PASSWORD);
@@ -62,7 +54,7 @@ try {
   await admin.locator("li", { hasText: guestEmail }).getByText("Faol").waitFor();
   step("admin ruxsat berdi, parol emailga ketdi");
 
-  // 4. Private login
+  // 3. Private login
   const password = await lastMailTo(guestEmail, /Password: (\S+)/);
   await guest.goto(`${BASE}/en/private/login`);
   await guest.fill('input[name="email"]', guestEmail);
@@ -75,14 +67,14 @@ try {
   await guest.getByText("Private diary").waitFor();
   step("login → private postlar ko'rinadi");
 
-  // 5. Private post ochiladi, lekin /blog orqali emas
+  // 4. Private post ochiladi, lekin /blog orqali emas
   await guest.goto(`${BASE}/en/private/private-diary`);
   await guest.getByRole("heading", { name: "Private diary" }).waitFor();
   const leak = await guest.request.get(`${BASE}/en/blog/private-diary`);
   assert.equal(leak.status(), 404);
   step("private post ochildi; /blog/ orqali 404");
 
-  // 6. Bloklangan foydalanuvchi kira olmaydi
+  // 5. Bloklangan foydalanuvchi kira olmaydi
   await db.privateUser.update({ where: { email: guestEmail }, data: { active: false } });
   await guest.goto(`${BASE}/en/private/private-diary`);
   await guest.waitForURL(`${BASE}/en/private`);

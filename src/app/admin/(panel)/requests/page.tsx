@@ -18,7 +18,6 @@ const STATUS_LABEL: Record<RequestStatus, string> = {
   PENDING: "Kutilmoqda",
   APPROVED: "Ruxsat berilgan",
   REJECTED: "Rad etilgan",
-  UNVERIFIED: "Email tasdiqlanmagan",
 };
 
 const dateTime = (d: Date) => d.toLocaleString("uz-UZ", { dateStyle: "medium", timeStyle: "short" });
@@ -41,7 +40,7 @@ export default async function AdminRequestsPage({ searchParams }: Props) {
       <PageTitle title="Private so'rovlar" />
 
       <div className="no-scrollbar mb-5 flex gap-2 overflow-x-auto">
-        {(["PENDING", "APPROVED", "REJECTED", "UNVERIFIED"] as const).map((s) => (
+        {(["PENDING", "APPROVED", "REJECTED"] as const).map((s) => (
           <Link
             key={s}
             href={`/admin/requests?status=${s}`}
