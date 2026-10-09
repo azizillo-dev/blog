@@ -52,7 +52,7 @@ export function CosmicHero({ name, role, avatar, stack, cv, socials, stats }: Pr
           {role && <p className="mt-1.5 text-white/70">{role}</p>}
 
           <p className="mt-4 overflow-hidden font-mono text-[10px] text-emerald-300/90 sm:text-xs">
-            <span className="typeline sm:hidden">{shortLine}</span>
+            <span className="typeline inline-block sm:hidden">{shortLine}</span>
             <span className="typeline hidden sm:inline-block">{longLine}</span>
           </p>
 
