@@ -23,6 +23,8 @@
 
 | 16 | 4 ta maqola (IT/AI/TATU/FAANG) + loyiha va sertifikatlarga batafsil sahifa, bir xil balandlikdagi kartalar | [x] | jonli: smoke ✔, kartalar balandligi teng (599/490 px), karta → `/projects/<slug>` → Orqaga ✔ | maqolalar faktlari ochiq manbalardan, har birida havola; `npm run slugs:backfill` eski yozuvlarga slug beradi |
 
+| 17 | Private'dan email tasdiqlash olib tashlandi; maxfiy sahifa (7 sahna, tashrif statistikasi); About → code space (boot + IDE + terminal) | [x] | vitest 37/37, jonli: smoke ✔, admin E2E ✔, code space E2E (boot, fayllar, terminal buyruqlari, Tab/↑, oddiy ko'rinish) ✔ | maxfiy sahifa manzili admin'dan; IP xom saqlanmaydi (xesh); mobil grid uchun `minmax(0,1fr)` shart |
+
 ## Log
 
 - 2026-09-19: C diskda joy tugadi (ENOSPC) → npm kesh tozalandi (~6 GB). Yana chiqsa: `%LOCALAPPDATA%\npm-cache\_cacache` ni o'chiring.

@@ -11,8 +11,13 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
 
 - **Bosh sahifa** (`/uz`, logo) — so'nggi 4 post 2×2 (telefonda ham 2 ustun) + "Barcha postlarni ko'rish" →
   `/posts` (2 ustun, 10 tadan pagination `?page=N`).
-- **Blog** menyusi (`/uz/blog`) — muallif haqida: matn/rasm bloklari + Tajriba + Ta'lim (LinkedIn uslubi,
-  `ResumeEntry`) + Ko'nikmalar (`Setting.skills`). Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
+- **Blog** menyusi (`/uz/blog`) — muallif haqida, ikki ko'rinishda:
+  - **Code space** (standart): boot ekrani → IDE (fayllar: about.md, experience.json, education.sql, skills.ts,
+    projects.json, contact.sh) → ishlaydigan terminal. Mantiq `features/about/` da: `files.ts` (profil → fayllar),
+    `highlight.ts` (yengil sintaksis bo'yash), `commands.ts` (buyruqlar, sof funksiya + `CommandLabels` tarjimasi).
+  - **Oddiy**: matn/rasm bloklari + Tajriba + Ta'lim + Ko'nikmalar. Tugma bilan almashadi (`localStorage`),
+    serverda render qilinadi va DOM'da qoladi — SEO buzilmaydi.
+  - Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
 - Admin paneldan yangi bo'limlar (section) qo'shish.
 - **More** menyusi:
   - **Sertifikatlar** — rasm, qayerdan olingani, sana, havola.
