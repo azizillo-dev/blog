@@ -24,8 +24,8 @@ export function CosmicHero({ name, role, avatar, stack, cv, socials, stats }: Pr
         <div className="stars stars-lg" />
         {/* sayyora */}
         <div className="absolute -right-16 top-10 size-40 rounded-full bg-gradient-to-br from-indigo-500/30 to-fuchsia-500/10 blur-2xl sm:size-56" />
-        <Rocket className="rocket top-[12%] hidden sm:block" style={{ "--dur": "28s", "--delay": "2s" } as React.CSSProperties} />
-        <Rocket className="rocket top-[62%] scale-75" style={{ "--dur": "36s", "--delay": "9s" } as React.CSSProperties} />
+        <Rocket className="rocket top-[14%] hidden sm:block" style={{ "--dur": "26s", "--delay": "1.5s" } as React.CSSProperties} />
+        <Rocket className="rocket top-[66%] scale-[0.6] opacity-70" style={{ "--dur": "38s", "--delay": "11s" } as React.CSSProperties} />
       </div>
 
       <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 sm:flex-row sm:items-start sm:gap-10">
@@ -107,19 +107,36 @@ export function CosmicHero({ name, role, avatar, stack, cv, socials, stats }: Pr
   );
 }
 
+/** O'ngga uchayotgan raketa: dumi — olov izi, tanasi oq, oynasi moviy. */
 function Rocket({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 64 24" width="64" height="24" className={className} style={style} aria-hidden>
+    <svg viewBox="0 0 120 40" width="110" height="36" className={className} style={style} aria-hidden>
       <defs>
-        <linearGradient id="flame" x1="1" x2="0">
-          <stop offset="0" stopColor="#f97316" stopOpacity="0" />
-          <stop offset="1" stopColor="#fbbf24" />
+        <linearGradient id="rk-trail" x1="0" x2="1">
+          <stop offset="0" stopColor="#f59e0b" stopOpacity="0" />
+          <stop offset="1" stopColor="#fbbf24" stopOpacity="0.9" />
+        </linearGradient>
+        <linearGradient id="rk-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="1" stopColor="#c7d2e5" />
         </linearGradient>
       </defs>
-      <path d="M0 12h22l6-3v6l-6-3" fill="url(#flame)" />
-      <path d="M26 12c0-4 6-8 14-8h8c6 0 12 4 12 8s-6 8-12 8h-8c-8 0-14-4-14-8Z" fill="#e2e8f0" />
-      <circle cx="50" cy="12" r="3" fill="#38bdf8" />
-      <path d="M34 4 30 0h6l2 4ZM34 20l-4 4h6l2-4Z" fill="#94a3b8" />
+
+      {/* iz */}
+      <path d="M0 20h34" stroke="url(#rk-trail)" strokeWidth="2.5" strokeLinecap="round" />
+      {/* olov */}
+      <path d="M36 20c6-7 10-7 14 0-4 7-8 7-14 0Z" fill="#fb923c" />
+      <path d="M40 20c4-4 6-4 9 0-3 4-5 4-9 0Z" fill="#fde68a" />
+      {/* qanotlar */}
+      <path d="M62 14 54 6c-3 4-3 8-1 11Z" fill="#8b9bb4" />
+      <path d="M62 26 54 34c-3-4-3-8-1-11Z" fill="#8b9bb4" />
+      {/* tanasi */}
+      <path d="M50 20c0-7 12-12 28-12 14 0 30 5 36 12-6 7-22 12-36 12-16 0-28-5-28-12Z" fill="url(#rk-body)" />
+      {/* oyna */}
+      <circle cx="92" cy="20" r="5" fill="#0ea5e9" />
+      <circle cx="90" cy="18" r="1.6" fill="#bae6fd" />
+      {/* chiziq */}
+      <path d="M62 20h16" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
