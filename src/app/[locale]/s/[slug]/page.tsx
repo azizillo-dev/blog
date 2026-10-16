@@ -56,7 +56,6 @@ export default async function SectionPage(props: Params) {
 
       <Container size="default" className="pb-10">
         <PageHeading title={section.title} subtitle={section.description || undefined} />
-        <p className="-mt-6 mb-6 text-center text-sm text-muted sm:-mt-8">{posts.length > 0 && `${posts.length} · ${section.title}`}</p>
         <PostTitleList posts={posts} locale={locale} dict={dict} />
       </Container>
     </div>

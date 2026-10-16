@@ -18,7 +18,10 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
     yozilayotgan kod qatori, stack chiplari, CV va ijtimoiy havolalar, pastda raqamlar.
   - Keyin klassik qism: matn bloklari + Tajriba + Ta'lim + Ko'nikmalar (serverda render, SEO uchun).
   - Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
-- Admin paneldan yangi bo'limlar (section) qo'shish.
+- Admin paneldan yangi bo'limlar (section) qo'shish. Har bo'lim uchun ko'rinish (`Section.layout`):
+  - `GRID` — rasmli kartalar;
+  - `LIST` — xira (blur) fon rasmi (`Section.image`) ustida faqat sarlavhalar ro'yxati (`PostTitleList`);
+    bosilsa oddiy post sahifasi (`/blog/<slug>`) rasm va matn bilan ochiladi.
 - **More** menyusi:
   - **Sertifikatlar** — rasm, qayerdan olingani, sana, havola.
   - **Loyihalar** (`/projects`) — bir xil balandlikdagi kartalar (sarlavha 2 qator, tavsif 3 qator, chiplar
