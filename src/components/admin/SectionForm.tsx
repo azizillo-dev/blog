@@ -1,14 +1,17 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import type { Locale } from "@/lib/constants";
 import type { ActionState } from "@/features/admin/form";
+import { ImageInput } from "./ImageInput";
 import { LocaleTabs } from "./LocaleTabs";
 import { ActionForm, Field, FormMessage, Input, Select, SubmitButton, Textarea } from "@/components/ui/form";
 
 export type SectionFormValues = {
   slug: string;
   inNav: string;
+  layout: string;
+  image: string;
   order: number;
   translations: Partial<Record<Locale, { title: string; description: string }>>;
 };
@@ -21,23 +24,42 @@ type Props = {
 
 export function SectionForm({ action, values, submitLabel }: Props) {
   const [state, formAction] = useActionState(action, {});
+  const [layout, setLayout] = useState(values.layout || "GRID");
+  const [image, setImage] = useState(values.image);
+
   return (
     <ActionForm action={formAction} className="space-y-4">
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-4">
         <Field label="Slug">
           <Input name="slug" defaultValue={values.slug} placeholder="travel" />
         </Field>
         <Field label="Menyuda">
           <Select name="inNav" defaultValue={values.inNav}>
             <option value="MAIN">Asosiy menyu</option>
-            <option value="MORE">&quot;More&quot; ichida</option>
+            <option value="MORE">&quot;Ko&apos;proq&quot; ichida</option>
             <option value="HIDDEN">Yashirin</option>
+          </Select>
+        </Field>
+        <Field label="Ko'rinish">
+          <Select name="layout" value={layout} onChange={(e) => setLayout(e.target.value)}>
+            <option value="GRID">Kartalar (rasm bilan)</option>
+            <option value="LIST">Ro&apos;yxat (faqat sarlavhalar)</option>
           </Select>
         </Field>
         <Field label="Tartib">
           <Input name="order" type="number" min={0} defaultValue={values.order} />
         </Field>
       </div>
+
+      {layout === "LIST" ? (
+        <Field group label="Fon rasmi" hint="Ro'yxat ortida xira (blur) bo'lib turadi. Keng, sifatli rasm tanlang.">
+          <ImageInput name="image" value={image} onChange={setImage} />
+        </Field>
+      ) : (
+        // Kartalar ko'rinishida fon kerak emas, lekin qiymat yo'qolmasin
+        <input type="hidden" name="image" value={image} />
+      )}
+
       <LocaleTabs>
         {(l) => (
           <>

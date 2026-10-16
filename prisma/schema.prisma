@@ -18,6 +18,8 @@ model Section {
   slug         String               @unique
   kind         String               @default("CUSTOM") // BLOG | IT | PRIVATE | CUSTOM
   inNav        String               @default("MORE") // MAIN | MORE | HIDDEN
+  layout       String               @default("GRID") // GRID (kartalar) | LIST (fon rasmi ustida sarlavhalar ro'yxati)
+  image        String               @default("") // LIST ko'rinishdagi xira fon rasmi
   order        Int                  @default(0)
   translations SectionTranslation[]
   posts        Post[]

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDictionary, toLocale } from "@/i18n";
 import { getSectionBySlug } from "@/features/sections/queries";
@@ -6,6 +7,7 @@ import { listPublishedPosts } from "@/features/posts/queries";
 import { Container } from "@/components/layout/Container";
 import { PageHeading } from "@/components/content/PageHeading";
 import { PostGrid } from "@/components/content/PostCard";
+import { PostTitleList } from "@/components/content/PostTitleList";
 
 export const revalidate = 3600;
 
@@ -31,10 +33,32 @@ export default async function SectionPage(props: Params) {
   const dict = getDictionary(locale);
   const posts = await listPublishedPosts({ locale, sectionId: section.id });
 
+  if (section.layout !== "LIST") {
+    return (
+      <Container>
+        <PageHeading title={section.title} subtitle={section.description || undefined} />
+        <PostGrid posts={posts} locale={locale} dict={dict} />
+      </Container>
+    );
+  }
+
   return (
-    <Container>
-      <PageHeading title={section.title} subtitle={section.description || undefined} />
-      <PostGrid posts={posts} locale={locale} dict={dict} />
-    </Container>
+    <div className="relative isolate">
+      {section.image && (
+        // Fon ekranga "qadalgan": skroll paytida qayta chizilmaydi (alohida GPU qatlami)
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 transform-gpu overflow-hidden">
+          {/* Kichik o'lchamda yuklanadi — baribir xiralashadi, trafik tejaladi */}
+          <Image src={section.image} alt="" fill priority sizes="640px" quality={50} className="scale-110 object-cover blur-2xl" />
+          {/* Matn o'qilishi uchun: yorug' rejimda och, qorong'ida to'q parda */}
+          <div className="absolute inset-0 bg-bg/55" />
+        </div>
+      )}
+
+      <Container size="default" className="pb-10">
+        <PageHeading title={section.title} subtitle={section.description || undefined} />
+        <p className="-mt-6 mb-6 text-center text-sm text-muted sm:-mt-8">{posts.length > 0 && `${posts.length} · ${section.title}`}</p>
+        <PostTitleList posts={posts} locale={locale} dict={dict} />
+      </Container>
+    </div>
   );
 }

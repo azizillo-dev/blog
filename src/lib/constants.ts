@@ -8,6 +8,9 @@ export type SectionKind = (typeof SECTION_KINDS)[number];
 export const NAV_PLACEMENTS = ["MAIN", "MORE", "HIDDEN"] as const;
 export type NavPlacement = (typeof NAV_PLACEMENTS)[number];
 
+export const SECTION_LAYOUTS = ["GRID", "LIST"] as const;
+export type SectionLayout = (typeof SECTION_LAYOUTS)[number];
+
 export const REQUEST_STATUSES = ["PENDING", "APPROVED", "REJECTED"] as const;
 export type RequestStatus = (typeof REQUEST_STATUSES)[number];
 

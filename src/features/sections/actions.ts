@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth/session";
-import { NAV_PLACEMENTS } from "@/lib/constants";
+import { NAV_PLACEMENTS, SECTION_LAYOUTS } from "@/lib/constants";
 import { slugify } from "@/lib/utils";
 import { bool, readLocalized, str, toActionError, type ActionState } from "@/features/admin/form";
 import { autoTranslate, translationNote } from "@/features/admin/translate";
@@ -12,6 +12,8 @@ import { revalidateSite } from "@/features/admin/revalidate";
 const sectionSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "faqat a-z, 0-9 va '-'").max(60),
   inNav: z.enum(NAV_PLACEMENTS),
+  layout: z.enum(SECTION_LAYOUTS),
+  image: z.string().max(2000),
   order: z.coerce.number().int().min(0).max(9999),
 });
 
@@ -23,6 +25,8 @@ export async function saveSectionAction(id: string | null, _: ActionState, fd: F
     const data = sectionSchema.parse({
       slug: str(fd, "slug") || slugify(input[0].title),
       inNav: str(fd, "inNav"),
+      layout: str(fd, "layout") || "GRID",
+      image: str(fd, "image"),
       order: str(fd, "order") || 0,
     });
     const { rows: translations, translated, failed } = await autoTranslate(input, ["title", "description"], {

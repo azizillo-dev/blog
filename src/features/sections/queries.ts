@@ -11,6 +11,8 @@ export type SectionView = {
   inNav: string;
   title: string;
   description: string;
+  layout: string;
+  image: string;
 };
 
 const withTranslations = { translations: true } as const;
@@ -19,7 +21,16 @@ export const getSections = cache(async (locale: Locale): Promise<SectionView[]> 
   const rows = await db.section.findMany({ orderBy: { order: "asc" }, include: withTranslations });
   return rows.map((s) => {
     const t = pickTranslation(s.translations, locale);
-    return { id: s.id, slug: s.slug, kind: s.kind, inNav: s.inNav, title: t?.title ?? s.slug, description: t?.description ?? "" };
+    return {
+      id: s.id,
+      slug: s.slug,
+      kind: s.kind,
+      inNav: s.inNav,
+      title: t?.title ?? s.slug,
+      description: t?.description ?? "",
+      layout: s.layout,
+      image: s.image,
+    };
   });
 });
 

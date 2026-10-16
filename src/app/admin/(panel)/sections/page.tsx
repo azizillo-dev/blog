@@ -28,7 +28,9 @@ export default async function AdminSectionsPage() {
             <summary className="flex cursor-pointer list-none flex-wrap items-center gap-3 px-5 py-4">
               <span className="font-semibold">{s.translations.find((t) => t.locale === "uz")?.title ?? s.slug}</span>
               <span className="rounded-md bg-surface-2 px-2 py-0.5 text-xs font-semibold text-muted">{KIND_LABEL[s.kind]}</span>
-              <span className="text-xs text-muted">{s._count.posts} post · {s.inNav}</span>
+              <span className="text-xs text-muted">
+                {s._count.posts} post · {s.inNav} · {s.layout === "LIST" ? "ro'yxat" : "kartalar"}
+              </span>
               <span className="ml-auto text-muted transition-transform group-open:rotate-180">▾</span>
             </summary>
             <div className="space-y-4 border-t border-border p-5">
@@ -38,6 +40,8 @@ export default async function AdminSectionsPage() {
                 values={{
                   slug: s.slug,
                   inNav: s.inNav,
+                  layout: s.layout,
+                  image: s.image,
                   order: s.order,
                   translations: Object.fromEntries(s.translations.map((t) => [t.locale as Locale, t])),
                 }}
@@ -64,7 +68,7 @@ export default async function AdminSectionsPage() {
         <SectionForm
           action={saveSectionAction.bind(null, null)}
           submitLabel="Qo'shish"
-          values={{ slug: "", inNav: "MORE", order: (sections.at(-1)?.order ?? 0) + 10, translations: {} }}
+          values={{ slug: "", inNav: "MORE", layout: "LIST", image: "", order: (sections.at(-1)?.order ?? 0) + 10, translations: {} }}
         />
       </Card>
     </>
