@@ -17,6 +17,7 @@ const ru: Dictionary = {
     empty: "Постов пока нет.",
     readTime: "{n} мин чтения",
     readMore: "Смотреть все посты",
+    seeAll: "Смотреть все",
   },
   about: {
     experience: "Опыт работы",

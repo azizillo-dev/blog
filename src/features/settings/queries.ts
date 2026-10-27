@@ -5,7 +5,7 @@ import type { SettingKey } from "@/lib/constants";
 
 export type Settings = Record<SettingKey, string>;
 
-const DEFAULTS: Settings = { siteTitle: "My I/O", authorName: "", leetcodeUsername: "", skills: "" };
+const DEFAULTS: Settings = { siteTitle: "My I/O", authorName: "", leetcodeUsername: "", skills: "", homeProjects: "", homeCertificates: "" };
 
 export const getSettings = cache(async (): Promise<Settings> => {
   const rows = await db.setting.findMany();

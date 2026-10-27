@@ -17,6 +17,7 @@ const uz: Dictionary = {
     empty: "Hozircha postlar yo'q.",
     readTime: "{n} daqiqa o'qish",
     readMore: "Barcha postlarni ko'rish",
+    seeAll: "Hammasini ko'rish",
   },
   about: {
     experience: "Tajriba",

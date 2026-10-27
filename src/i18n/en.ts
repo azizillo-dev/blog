@@ -15,6 +15,7 @@ const en = {
     empty: "No posts yet.",
     readTime: "{n} min read",
     readMore: "View all posts",
+    seeAll: "See all",
   },
   about: {
     experience: "Experience",

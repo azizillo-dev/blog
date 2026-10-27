@@ -37,7 +37,10 @@ export const COOKIE = {
 export const RESUME_KINDS = ["EXPERIENCE", "EDUCATION"] as const;
 export type ResumeKind = (typeof RESUME_KINDS)[number];
 
-export const SETTING_KEYS = ["siteTitle", "leetcodeUsername", "authorName", "skills"] as const;
+export const SETTING_KEYS = ["siteTitle", "leetcodeUsername", "authorName", "skills", "homeProjects", "homeCertificates"] as const;
+
+/** Ha/yo'q sozlamalar (checkbox): "1" yoki "" saqlanadi. */
+export const BOOLEAN_SETTINGS = ["homeProjects", "homeCertificates"] as const;
 
 export const POSTS_PER_PAGE = 10;
 export const HOME_POSTS = 4;
