@@ -11,13 +11,10 @@ Yengil, 120 Hz da silliq ishlaydigan, 100% responsive shaxsiy blog:
 
 - **Bosh sahifa** (`/uz`, logo) — so'nggi 4 post 2×2 (telefonda ham 2 ustun) + "Barcha postlarni ko'rish" →
   `/posts` (2 ustun, 10 tadan pagination `?page=N`).
-- **Blog** menyusi (`/uz/blog`) — muallif haqida:
-  - `BootGate` → har ochilganda terminal uslubidagi yuklanish ekrani (~4,5 s, `BootScreen`, skip bor,
-    `prefers-reduced-motion` da o'tkazib yuboriladi). Hech qayerda eslab qolinmaydi — qaytib kelganda qayta ishlaydi.
-  - `CosmicHero` — koinot foni (3 qatlam yulduz + 2 raketa, faqat CSS), chapda avatar va orbita, o'ngda nom,
-    yozilayotgan kod qatori, stack chiplari, CV va ijtimoiy havolalar, pastda raqamlar.
-  - Keyin klassik qism: matn bloklari + Tajriba + Ta'lim + Ko'nikmalar (serverda render, SEO uchun).
-  - Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
+- **Blog** menyusi (`/uz/blog`) — muallif haqida (klassik): avatar, matn bloklari, CV tugmasi, Tajriba, Ta'lim,
+  Ko'nikmalar. Postlar URL'i `/uz/blog/<slug>` o'zgarmagan.
+- Bosh sahifa: postlardan keyin ixtiyoriy **Loyihalar** (4 ta) va **Sertifikatlar** (6 ta) bloklari —
+  Admin → Sozlamalar → "Bosh sahifa" (`homeProjects`, `homeCertificates`, qiymati "1" yoki "").
 - Admin paneldan yangi bo'limlar (section) qo'shish. Har bo'lim uchun ko'rinish (`Section.layout`):
   - `GRID` — rasmli kartalar;
   - `LIST` — xira (blur) fon rasmi (`Section.image`) ustida faqat sarlavhalar ro'yxati (`PostTitleList`);

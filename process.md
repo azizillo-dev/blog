@@ -29,6 +29,8 @@
 
 | 19 | Bo'limlar uchun "ro'yxat" ko'rinishi + xira fon rasmi (admin); About boot sessiyada bir marta | [x] | jonli E2E: admin'dan LIST bo'lim + 5 post → telefon/desktop × light/dark, rasmsiz ro'yxat, fon, overflow=0, bosilsa post ochiladi, "Ko'proq"da ko'rinadi; test ma'lumotlari o'chirildi | yangi bo'lim formasi standart holda LIST |
 
+| 20 | About klassik holatiga qaytarildi (boot va koinot olib tashlandi); bosh sahifaga ixtiyoriy loyihalar/sertifikatlar bloklari | [x] | jonli: yoqilgach ikkala blok chiqdi (1280/390px, overflow=0, skrolldan keyin kartalar ko'rinadi), o'chirilgach yo'qoldi; About'da boot=0, koinot=0 | sinovdan keyin kalitlar yana o'chirib qo'yildi |
+
 ## Log
 
 - 2026-09-19: C diskda joy tugadi (ENOSPC) → npm kesh tozalandi (~6 GB). Yana chiqsa: `%LOCALAPPDATA%\npm-cache\_cacache` ni o'chiring.
